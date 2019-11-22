@@ -1,0 +1,53 @@
+<form>
+  <h3 *ngIf="editMode" class="text-primary">Edit an exercise</h3>
+  <h3 *ngIf="!editMode" class="text-success">Add a new exercise</h3>
+  <div class="form-group">
+    <label class="text-secondary" for="exerciseName">Exercise name</label>
+    <input type="text" class="form-control" id="exerciseName" name="exerciseName"
+      placeholder="Type the exercise name..." [(ngModel)]="name">
+  </div>
+  <div class="form-group">
+    <label class="text-secondary" for="exerciseDescr">Exercise note</label>
+    <textarea class="form-control" id="exerciseDescr" name="exerciseDescr" placeholder="A little about the exercise"
+      [(ngModel)]="note"></textarea>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-4">
+      <label class="text-secondary" for="roundNumber">Rounds</label>
+      <input 
+      type="number" 
+      class="form-control" 
+      id="roundNumber" 
+      name="roundNumber" 
+      placeholder="Rounds..."
+      [(ngModel)]="roundAmount"
+    >
+    </div>
+    <div class="form-group col-md-4">
+      <label class="text-secondary" for="unitNumber">
+        {{ unit === 'repetition' ? 'Reps' : 'Time' }}
+      </label>
+      <input type="number" class="form-control" id="unitNumber" name="unitNumber"
+        placeholder="{{ unit ==='repetition' ? 'Reps...' : 'Sec...' }}" [(ngModel)]="unitAmount">
+    </div>
+    <div class="form-group col-md-4">
+      <label class="text-secondary" for="exerciseType">Type</label>
+      <select id="exerciseType" name="exerciseType" class="form-control" [(ngModel)]="unit">
+        <option value="repetition">By reps</option>
+        <option value="second">By time</option>
+      </select>
+    </div>
+  </div>
+  <button 
+    *ngIf="editMode === false" 
+    class="btn btn-success" 
+    type="button"
+    (click)="onAddExercise()"
+  >Add to the list</button>
+  <button 
+    *ngIf="editMode === true" 
+    class="btn btn-primary" 
+    type="button"
+    (click)="onSaveChanges()"
+  >Save changes</button>
+</form>

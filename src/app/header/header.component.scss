@@ -1,0 +1,32 @@
+header {
+  z-index: 10;
+  width: 100%;
+  top: 0;
+  position: fixed;
+}
+
+hr {
+  margin: 0;
+}
+
+nav {
+  padding-top: 0;
+  padding-bottom: 0;
+  .navbar-brand {
+    font-size: 23px;
+    padding: 0;
+  }
+  .navbar-nav {
+    flex-direction: row !important;
+    .nav-item {
+      padding: 6px !important;
+      &.active {
+        background-color: #e7e7e7;
+      }
+      a {
+        padding: 0.5rem;
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
