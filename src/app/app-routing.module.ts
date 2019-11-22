@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { WorkoutComponent } from './workout/workout.component';
 import { WorkoutExercisesComponent } from './workout/workout-exercises/workout-exercises.component';
 import { WorkoutActionComponent } from './workout/workout-action/workout-action.component';
+import { ResultsComponent } from './results/results.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'train/:id', component: WorkoutActionComponent },
     ]
   },
+  { path: 'results', component: ResultsComponent },
   { path: '**', redirectTo: 'workout/new' },
 ];
 

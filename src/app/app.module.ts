@@ -12,6 +12,7 @@ import { ExerciseEditComponent } from './workout/workout-exercises/exercise-edit
 import { WorkoutActionComponent } from './workout/workout-action/workout-action.component';
 import { WorkoutExercisesComponent } from './workout/workout-exercises/workout-exercises.component';
 import { WorkoutInfoComponent } from './workout/workout-exercises/workout-info/workout-info.component';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { WorkoutInfoComponent } from './workout/workout-exercises/workout-info/w
     ExerciseEditComponent,
     WorkoutActionComponent,
     WorkoutExercisesComponent,
-    WorkoutInfoComponent
+    WorkoutInfoComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,6 @@ export class Exercise {
     public unitAmount: number,
     public roundAmount: number,
   ) {
-    this.note = note ? !note.trim() ? 'No note provided' : note : 'No note provided...';
+    this.note = note ? !note.trim() ? 'No note provided...' : note : 'No note provided...';
   }
 }

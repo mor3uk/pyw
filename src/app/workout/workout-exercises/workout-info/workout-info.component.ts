@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import moment from 'moment';
 
 import { Exercise } from '../../../shared/models/exercise.model';
@@ -11,10 +12,11 @@ import { WorkoutService } from '../../../shared/services/workout.service';
   templateUrl: './workout-info.component.html',
   styleUrls: ['./workout-info.component.scss']
 })
-export class WorkoutInfoComponent implements OnInit {
+export class WorkoutInfoComponent implements OnInit, OnDestroy {
   exercises: Array<Exercise> = [];
   muscleGroup: string;
   rounds: number;
+  exerciseSubscription: Subscription;
 
   constructor(
     private exerciseService: ExerciseService,
@@ -22,8 +24,13 @@ export class WorkoutInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.exerciseService.exercisesChanged
+    this.exercises = this.exerciseService.getCurrentExercises();
+    this.exerciseSubscription = this.exerciseService.exercisesChanged
       .subscribe((exercises) => this.exercises = exercises);
+  }
+
+  ngOnDestroy() {
+    this.exerciseSubscription.unsubscribe();
   }
 
   onSaveWorkout() {

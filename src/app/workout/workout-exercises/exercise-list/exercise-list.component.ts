@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Exercise } from '../../../shared/models/exercise.model';
-import { ExerciseService } from 'src/app/shared/services/exercise.service';
+import { ExerciseService } from '../../../shared/services/exercise.service';
+import { WorkoutService } from '../../../shared/services/workout.service';
 
 @Component({
   selector: 'app-exercise-list',
@@ -11,13 +13,24 @@ import { ExerciseService } from 'src/app/shared/services/exercise.service';
 })
 export class ExerciseListComponent implements OnInit {
   exercises: Array<Exercise> = [];
+  exerciseSubscription: Subscription;
+  id: string;
+  editMode: boolean = false;
 
-  constructor(private route: ActivatedRoute,
-    private exerciseService: ExerciseService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private exerciseService: ExerciseService,
+    private workoutService: WorkoutService,
+  ) { }
 
   ngOnInit() {
-    this.exerciseService.exercisesChanged
+    this.exercises = this.exerciseService.getCurrentExercises();
+    this.exerciseSubscription = this.exerciseService.exercisesChanged
       .subscribe((exercises) => this.exercises = exercises);
+  }
+
+  ngOnDestroy() {
+    this.exerciseSubscription.unsubscribe();
   }
 
 }
