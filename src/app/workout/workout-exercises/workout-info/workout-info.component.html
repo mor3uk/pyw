@@ -22,6 +22,7 @@
     <button 
       class="btn btn-block btn-success" 
       type="button"
+      [disabled]="isDisabled()"
       (click)="onSaveWorkout()"
     >Save workout</button>
   </div>

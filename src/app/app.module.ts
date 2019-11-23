@@ -13,6 +13,8 @@ import { WorkoutActionComponent } from './workout/workout-action/workout-action.
 import { WorkoutExercisesComponent } from './workout/workout-exercises/workout-exercises.component';
 import { WorkoutInfoComponent } from './workout/workout-exercises/workout-info/workout-info.component';
 import { ResultsComponent } from './results/results.component';
+import { WorkoutActionPanelComponent } from './workout/workout-action/workout-action-panel/workout-action-panel.component';
+import { WorkoutActionResultsComponent } from './workout/workout-action/workout-action-results/workout-action-results.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ResultsComponent } from './results/results.component';
     WorkoutActionComponent,
     WorkoutExercisesComponent,
     WorkoutInfoComponent,
-    ResultsComponent
+    ResultsComponent,
+    WorkoutActionPanelComponent,
+    WorkoutActionResultsComponent,
   ],
   imports: [
     BrowserModule,

@@ -28,7 +28,7 @@ export class ExerciseEditComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       if (this.id = params.id) {
         this.editMode = true;
-        const exercise = this.exerciseService.getExerciseById(this.id);
+        const exercise = this.exerciseService.getCurrentExerciseById(this.id);
         this.name = exercise.name;
         this.note = exercise.note === 'No note provided...' ? '' : exercise.note;
         this.unit = exercise.unit;
@@ -55,7 +55,7 @@ export class ExerciseEditComponent implements OnInit {
 
   onSaveChanges() {
     this.note = !this.note.trim() ? 'No note provided...' : this.note;
-    this.exerciseService.editExercise(this.id, {
+    this.exerciseService.editCurrentExercise(this.id, {
       name: this.name, note: this.note, unit: this.unit,
       unitAmount: this.unitAmount, roundAmount: this.roundAmount
     });

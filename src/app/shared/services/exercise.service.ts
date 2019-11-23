@@ -13,7 +13,6 @@ export class ExerciseService {
 
   addExercise(exercise: Exercise): void {
     this.currentExercises.push(exercise);
-    this.exercises.push(exercise);
     this.exercisesChanged.next(this.currentExercises.slice());
   }
 
@@ -29,11 +28,12 @@ export class ExerciseService {
     return this.exercises.find((exercise) => exercise.id === id);
   }
 
-  editExercise(id: string, changes: object) {
-    this.exercises = this.exercises.map((exercise) => {
-      return exercise.id === id ? { ...exercise, ...changes } : exercise;
-    });
-    this.currentExercises = this.exercises.map((exercise) => {
+  getCurrentExerciseById(id: string): Exercise {
+    return this.currentExercises.find((exercise) => exercise.id === id);
+  }
+
+  editCurrentExercise(id: string, changes: object) {
+    this.currentExercises = this.currentExercises.map((exercise) => {
       return exercise.id === id ? { ...exercise, ...changes } : exercise;
     });
     this.exercisesChanged.next(this.currentExercises.slice());
@@ -41,5 +41,9 @@ export class ExerciseService {
 
   emptyCurrentExercises() {
     this.currentExercises = [];
+  }
+
+  saveExercises() {
+    this.exercises = this.currentExercises.slice();
   }
 }

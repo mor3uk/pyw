@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 
 import { Workout } from '../models/workout.model';
-import { Exercise } from '../models/exercise.model';
 import { ExerciseService } from './exercise.service';
 
 @Injectable({
@@ -13,6 +12,8 @@ export class WorkoutService {
   constructor(private exerciseService: ExerciseService) { }
 
   addWorkout(workout: Workout) {
+    this.exerciseService.saveExercises();
+    this.exerciseService.emptyCurrentExercises();
     this.workouts.push(workout);
   }
 
@@ -24,10 +25,8 @@ export class WorkoutService {
     return this.workouts.find((workout) => id === workout.id);
   }
 
-  getOwnExercises(id: string): Array<Exercise> {
-    const exerciseIds: Array<string> = this.getWorkout(id)
-      .exercisesIdList;
-    return this.exerciseService.getExercises()
-      .filter((exercise) => exerciseIds.includes(exercise.id));
+  getLastWorkout(): Workout {
+    return this.workouts[this.workouts.length - 1];
   }
+
 }
