@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 
 import { Workout } from '../models/workout.model';
 import { ExerciseService } from './exercise.service';
+import { deepClone } from '../utils/deep-clone';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,12 @@ export class WorkoutService {
 
   getLastWorkout(): Workout {
     return this.workouts[this.workouts.length - 1];
+  }
+
+  getOwnExercises(id: string) {
+    return deepClone(this.exerciseService.getExercises()
+      .filter((exercise) => this.getWorkout(id)
+        .exercisesIdList.includes(exercise.id)));
   }
 
 }

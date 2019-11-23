@@ -3,7 +3,12 @@ import { Result } from './result.model';
 
 export class Exercise {
   id: string = uuid();
-  result: { succeeded: boolean, results: Array<Result> } = null;
+  result: { succeeded?: boolean, results: Array<Result[]> } = {
+    succeeded: false, results: [[]],
+  };
+  resetResults: Function = function () {
+    this.result.results = [];
+  };
 
   constructor(
     public name: string,

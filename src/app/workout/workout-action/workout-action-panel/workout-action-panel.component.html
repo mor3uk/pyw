@@ -1,4 +1,4 @@
-<h3 class="text-secondary">Muscle group: <u>{{ workout.muscleGroup }}</u></h3>
+<h3 class="text-success">Muscle group: <u>{{ workout.muscleGroup }}</u></h3>
 <div class="card mt-3">
   <div class="card-body">
     <h4 class="crad-title mb-3 text-success">Start exercising <u>{{ currentExercise.name.toLowerCase() }}</u></h4>
@@ -9,45 +9,56 @@
     </div>
     <div class="row align-items-center text-success text-center">
       <div class="col">
-        <button class="btn btn-block btn btn-success">Start</button>
-        <!-- <button 
-              *ngIf="isRound"
-              class="btn btn-block btn btn-info"
-              (click)="onFinishRound()"
-            >Done</button> -->
+        <button 
+          class="btn btn-block btn btn-success"
+          *ngIf="!isRound"
+          (click)="onStartRound()"
+          [disabled]="!readyToStart()"
+        >Start</button>
+        <button 
+          class="btn btn-block btn btn-info"
+          *ngIf="isRound"
+          (click)="onFinishRound()"
+        >Done</button>
       </div>
       <div class="col">
-        Rounds: 0 / {{ currentExercise.roundAmount }}
+        Rounds: {{ finishedRounds }} / {{ currentExercise.roundAmount }}
       </div>
       <div class="col">
-        Time: 00:00
+        Time: {{ secondsToTimer() }}
       </div>
     </div>
-    <!-- <div class="row justify-content-center text-center align-items-center mt-3">
-        <div class="col-4">
-          <label for="repetitions" class="mb-0 text-secondary">
-            {{ currentExercise.unit[0].toUpperCase() + currentExercise.unit.substring(1) + 's' }}
-          </label>
-        </div>
-        <div class="col-3">
-          <input id="repetitions" class="form-control" type="number">
-        </div>
-        <div class="col-4">
-          <button class="btn btn-info btn-block btn-sm">Rest
-          </button>
-        </div>
-      </div> -->
+    <div *ngIf="roundJustFinished" class="row justify-content-center text-center align-items-center mt-3">
+      <div class="col-4">
+        <label for="units" class="mb-0 text-secondary">
+          {{ currentExercise.unit[0].toUpperCase() + currentExercise.unit.substring(1) + 's' }}
+        </label>
+      </div>
+      <div class="col-3">
+        <input id="units" [(ngModel)]="currentUnits" class="form-control" type="number">
+      </div>
+      <div class="col-4">
+        <button 
+          class="btn btn-info btn-block"
+          (click)="onRest()"
+          [ngClass]="{'btn-danger': finishedRounds === currentExercise.roundAmount}"
+        >{{ finishedRounds === currentExercise.roundAmount ? 'Finish' : 'Rest' }}</button>
+      </div>
+    </div>
     <div class="alert alert-warning mt-3">
       Notice: training can not be paused for resting time is provided!
     </div>
     <div class="row mt-3">
       <div class="col">
-        <button class="btn btn-block btn-success" [disabled]="currentRound !== currentExercise.roundAmount"
-          (click)="onSaveResults()">Save</button>
+        <button class="btn btn-block btn-success" [disabled]="!workoutFinished"
+          (click)="onSaveExercisesResults()">Save</button>
       </div>
       <div class="col">
-        <button class="btn btn-block text-white btn-warning" title="Results are to be lost" (click)="onTryAgain()">Try
-          again</button>
+        <button 
+          class="btn btn-block text-white btn-warning" 
+          title="Results are to be lost" 
+          (click)="setDefaultState()"
+        >Try again</button>
       </div>
       <div class="col">
         <button class="btn btn-block btn-danger" title="Results are to be lost">Quit</button>
@@ -56,6 +67,6 @@
   </div>
   <hr class="m-0">
   <div class="card-header text-muted text-right">
-    Workout rounds: 1 / 2
+    Workout round passed: {{ finishedWorkoutRounds }} / {{ workout.rounds }}
   </div>
 </div>

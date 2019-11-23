@@ -39,6 +39,15 @@ export class ExerciseService {
     this.exercisesChanged.next(this.currentExercises.slice());
   }
 
+  rewriteExercises(exercisesToRewrite: Array<Exercise>) {
+    this.exercises = this.exercises.map((exercise) => {
+      const exerciseToRewrite = exercisesToRewrite
+        .find((exerciseToRewrite) => exerciseToRewrite.id === exercise.id);
+
+      return exerciseToRewrite || exercise;
+    });
+  }
+
   emptyCurrentExercises() {
     this.currentExercises = [];
   }
