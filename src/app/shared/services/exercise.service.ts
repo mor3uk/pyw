@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Exercise } from '../models/exercise.model';
+import { deepClone } from '../utils/deep-clone';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +14,15 @@ export class ExerciseService {
 
   addExercise(exercise: Exercise): void {
     this.currentExercises.push(exercise);
-    this.exercisesChanged.next(this.currentExercises.slice());
+    this.exercisesChanged.next(deepClone(this.currentExercises));
   }
 
   getExercises(): Array<Exercise> {
-    return this.exercises.slice();
+    return deepClone(this.exercises);
   }
 
   getCurrentExercises(): Array<Exercise> {
-    return this.currentExercises.slice();
+    return deepClone(this.currentExercises);
   }
 
   getExerciseById(id: string): Exercise {
@@ -36,7 +37,7 @@ export class ExerciseService {
     this.currentExercises = this.currentExercises.map((exercise) => {
       return exercise.id === id ? { ...exercise, ...changes } : exercise;
     });
-    this.exercisesChanged.next(this.currentExercises.slice());
+    this.exercisesChanged.next(deepClone(this.currentExercises));
   }
 
   rewriteExercises(exercisesToRewrite: Array<Exercise>) {
@@ -53,6 +54,12 @@ export class ExerciseService {
   }
 
   saveExercises() {
-    this.exercises = this.currentExercises.slice();
+    this.exercises = deepClone(this.currentExercises);
+  }
+
+  removeCurrentExercise(id: string) {
+    this.currentExercises = this.currentExercises
+      .filter((exercise) => id !== exercise.id);
+    this.exercisesChanged.next(deepClone(this.currentExercises));
   }
 }

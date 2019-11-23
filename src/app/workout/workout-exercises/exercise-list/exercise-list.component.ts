@@ -17,11 +17,7 @@ export class ExerciseListComponent implements OnInit {
   id: string;
   editMode: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private exerciseService: ExerciseService,
-    private workoutService: WorkoutService,
-  ) { }
+  constructor(private exerciseService: ExerciseService) { }
 
   ngOnInit() {
     this.exercises = this.exerciseService.getCurrentExercises();

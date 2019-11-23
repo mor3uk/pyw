@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Exercise } from 'src/app/shared/models/exercise.model';
+
+import { Exercise } from '../../../../shared/models/exercise.model';
+import { ExerciseService } from '../../../../shared/services/exercise.service';
 
 @Component({
   selector: 'app-exercise-item',
@@ -11,12 +13,16 @@ export class ExerciseItemComponent implements OnInit {
   roundWord: string = 'round';
   unitWord: string;
 
-  constructor() { }
+  constructor(private exerciseService: ExerciseService) { }
 
   ngOnInit() {
     this.unitWord = this.exercise.unit;
     if (this.exercise.unitAmount !== 1) { this.unitWord += 's'; }
     if (this.exercise.roundAmount !== 1) { this.roundWord += 's'; }
+  }
+
+  onRemoveExercise() {
+    this.exerciseService.removeCurrentExercise(this.exercise.id);
   }
 
 }

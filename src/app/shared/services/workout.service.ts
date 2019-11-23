@@ -19,7 +19,7 @@ export class WorkoutService {
   }
 
   getWorkouts(): Array<Workout> {
-    return this.workouts.slice();
+    return deepClone(this.workouts);
   }
 
   getWorkout(id: string): Workout {

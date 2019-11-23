@@ -1,9 +1,14 @@
-<h3 class="text-success">Muscle group: <u>{{ workout.muscleGroup }}</u></h3>
+<h3 class="text-success">
+  {{ workout.muscleGroup.trim() ? 'Muscle group: ' + workout.muscleGroup.trim()
+    : 'No muscle group specified...' }}
+</h3>
 <div class="card mt-3">
   <div class="card-body">
-    <h4 class="crad-title mb-3 text-success">Start exercising <u>{{ currentExercise.name.toLowerCase() }}</u></h4>
+    <h4 class="crad-title mb-3 text-success">
+      Start exercising <u>{{ currentExercise.name.toLowerCase() }}</u>
+    </h4>
     <div class="card-text text-center alert alert-success">
-      {{ currentExercise.note }}
+      {{ currentExercise.note.trim() || 'No note provided...' }}
       <hr class="m-2">
       Your goal - {{ currentExercise.unitAmount }} {{ unitWord }} at each round!
     </div>

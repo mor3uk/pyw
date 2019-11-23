@@ -11,7 +11,7 @@ export class Workout {
   }
 
   constructor(
-    public muscleGroup: string,
+    public muscleGroup: string = '',
     public rounds: number,
     public exercisesIdList: Array<string>,
   ) { }

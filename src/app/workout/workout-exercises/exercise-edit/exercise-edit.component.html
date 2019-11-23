@@ -12,30 +12,34 @@
       [(ngModel)]="note"></textarea>
   </div>
   <div class="row">
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-3">
       <label class="text-secondary" for="roundNumber">Rounds</label>
       <input 
       type="number" 
       class="form-control" 
       id="roundNumber" 
       name="roundNumber" 
-      placeholder="Rounds..."
       [(ngModel)]="roundAmount"
     >
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6 p-0">
+      <label class="text-secondary" for="exerciseType">Type</label>
+      <select id="exerciseType" name="exerciseType" class="form-control" [(ngModel)]="unit">
+        <option value="repetition">By repetitions</option>
+        <option value="second">By seconds</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3">
       <label class="text-secondary" for="unitNumber">
         {{ unit === 'repetition' ? 'Reps' : 'Time' }}
       </label>
-      <input type="number" class="form-control" id="unitNumber" name="unitNumber"
-        placeholder="{{ unit ==='repetition' ? 'Reps...' : 'Sec...' }}" [(ngModel)]="unitAmount">
-    </div>
-    <div class="form-group col-md-4">
-      <label class="text-secondary" for="exerciseType">Type</label>
-      <select id="exerciseType" name="exerciseType" class="form-control" [(ngModel)]="unit">
-        <option value="repetition">By reps</option>
-        <option value="second">By time</option>
-      </select>
+      <input 
+        type="number" 
+        class="form-control" 
+        id="unitNumber" 
+        name="unitNumber" 
+        [(ngModel)]="unitAmount"
+      >
     </div>
   </div>
   <button 

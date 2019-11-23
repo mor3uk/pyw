@@ -12,11 +12,9 @@ export class Exercise {
 
   constructor(
     public name: string,
-    public note: string,
+    public note: string = '',
     public unit: 'second' | 'repetition',
     public unitAmount: number,
     public roundAmount: number,
-  ) {
-    this.note = note ? !note.trim() ? 'No note provided...' : note : 'No note provided...';
-  }
+  ) { }
 }

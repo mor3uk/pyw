@@ -13,8 +13,8 @@ export class ExerciseEditComponent implements OnInit {
   name: string;
   note: string;
   unit: 'repetition' | 'second' = 'repetition';
-  unitAmount: number;
-  roundAmount: number;
+  unitAmount: number = 0;
+  roundAmount: number = 0;
   editMode: boolean = false;
   id: string;
 
@@ -30,7 +30,7 @@ export class ExerciseEditComponent implements OnInit {
         this.editMode = true;
         const exercise = this.exerciseService.getCurrentExerciseById(this.id);
         this.name = exercise.name;
-        this.note = exercise.note === 'No note provided...' ? '' : exercise.note;
+        this.note = exercise.note && exercise.note.trim();
         this.unit = exercise.unit;
         this.unitAmount = exercise.unitAmount;
         this.roundAmount = exercise.roundAmount;
@@ -54,7 +54,6 @@ export class ExerciseEditComponent implements OnInit {
   }
 
   onSaveChanges() {
-    this.note = !this.note.trim() ? 'No note provided...' : this.note;
     this.exerciseService.editCurrentExercise(this.id, {
       name: this.name, note: this.note, unit: this.unit,
       unitAmount: this.unitAmount, roundAmount: this.roundAmount
