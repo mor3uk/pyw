@@ -12,6 +12,19 @@ export class ExerciseService {
   exercises: Array<Exercise> = [];
   currentExercises: Array<Exercise> = [];
 
+  constructor() {
+    try {
+      const exercisesJSON = localStorage.getItem('exercises');
+      if (exercisesJSON) {
+        this.exercises = JSON.parse(exercisesJSON);
+      } else {
+        this.exercises = [];
+      }
+    } catch (e) {
+      this.exercises = [];
+    }
+  }
+
   addExercise(exercise: Exercise): void {
     this.currentExercises.push(exercise);
     this.exercisesChanged.next(deepClone(this.currentExercises));
@@ -55,6 +68,7 @@ export class ExerciseService {
 
   saveExercises() {
     this.exercises = deepClone(this.currentExercises);
+    localStorage.setItem('exercises', JSON.stringify(this.exercises));
   }
 
   removeCurrentExercise(id: string) {

@@ -1,0 +1,53 @@
+<div>
+  <h3 class="text-secondary">Workout list filters</h3>
+  <div class="row">
+    <div class="col-md">
+      <small class="form-text text-muted">Filter workouts by muscle group</small>
+      <input 
+      [(ngModel)]="muscleGroup" 
+      type="text" 
+      class="form-control mt-1 mb-1" 
+      placeholder="Muscle group..."  
+      (input)="onUpdateFilters()"
+    >
+    </div>
+    <div *ngIf="status === 'completed' || succeeded" class="col-md">
+      <small class="form-text text-muted">Sort by</small>
+      <select 
+        [(ngModel)]="sortBy" 
+        class="form-control mt-1" 
+        (change)="onUpdateFilters()"
+      >
+        <option value="date-creation" selected>Date of creation</option>
+        <option value="date-completion">Date of completion</option>
+        <option value="time-completion">Time of workout</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md">
+      <small class="form-text text-muted">Filter workouts by status</small>
+      <select 
+        [(ngModel)]="status" 
+        class="form-control mt-1" 
+        (change)="onUpdateFilters()"
+      >
+        <option value="" selected>Both</option>
+        <option value="completed">Completed</option>
+        <option value="not completed">Not completed</option>
+      </select>
+    </div>
+    <div class="col-md">
+      <small class="form-text text-muted">Filter workouts by completion</small>
+      <select 
+        [(ngModel)]="succeeded" 
+        class="form-control mt-1" 
+        (change)="onUpdateFilters()"
+      >
+        <option value="" selected>Both</option>
+        <option value="succeeded">Succeeded</option>
+        <option value="failed">Failed</option>
+      </select>
+    </div>
+  </div>
+</div>

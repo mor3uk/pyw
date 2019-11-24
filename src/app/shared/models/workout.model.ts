@@ -7,7 +7,7 @@ export class Workout {
   createdAt: number = +moment();
   id: string = uuid();
   status: { completed: boolean, succeeded: boolean } = {
-    completed: false, succeeded: null,
+    completed: false, succeeded: false,
   }
 
   constructor(

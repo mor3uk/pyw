@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { Workout } from '../../../shared/models/workout.model';
@@ -30,12 +30,15 @@ export class WorkoutActionPanelComponent implements OnInit {
   currentResults: Array<Result>;
   workoutFinished: boolean;
   isSuccess: boolean;
+  workoutTime: number;
+  workoutTimer;
 
   constructor(
     private exerciseService: ExerciseService,
     private workoutService: WorkoutService,
     private route: ActivatedRoute,
-    private workoutActionService: WorkoutActionService
+    private workoutActionService: WorkoutActionService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -46,6 +49,9 @@ export class WorkoutActionPanelComponent implements OnInit {
   }
 
   onStartRound() {
+    if (!(this.currentExerciseIndex || this.finishedWorkoutRounds)) {
+      this.workoutTimer = setInterval(() => this.workoutTime++, 1000);
+    }
     if (!this.workoutFinished) {
       clearInterval(this.currentTimer);
       this.currentTime = 0;
@@ -124,7 +130,10 @@ export class WorkoutActionPanelComponent implements OnInit {
   onSaveExercisesResults() {
     if (this.workoutFinished) {
       this.exerciseService.rewriteExercises(deepClone(this.exercises));
-      this.workoutService.setWorkoutCompleted(this.workout.id, this.isSuccess);
+      this.workoutService.setWorkoutCompleted(
+        this.workout.id, this.isSuccess, this.workoutTime);
+
+      this.router.navigate(['results']);
     }
   }
 
@@ -137,12 +146,14 @@ export class WorkoutActionPanelComponent implements OnInit {
     this.currentUnits = 0;
     this.finishedRounds = 0;
     this.finishedWorkoutRounds = 0;
+    this.workoutTime = 0;
     this.roundJustFinished = false;
     this.isRound = false;
     this.currentResults = [];
     this.workoutFinished = false;
     this.isSuccess = true;
     clearInterval(this.currentTimer);
+    clearInterval(this.workoutTimer);
     this.exercises.forEach((exercise) => exercise.resetResults());
     this.workoutActionService.roundsReseted.next();
   }

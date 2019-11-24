@@ -1,0 +1,17 @@
+<div 
+  class="alert results-item"
+  [ngClass]="{'alert-info': workout.status.completed === false,
+    'alert-danger': workout.status.succeeded === false,
+    'alert-success': workout.status.succeeded === true}"
+>
+  <div class="results-item__dates d-flex justify-content-between">
+    <span>Added {{ dateMessage(workout.createdAt) }}</span>
+    <span>{{ workout.status.completed ? 'Completed ' + dateMessage(workout.completedAt)
+      : 'Not completed yet' }}</span>
+  </div>
+  <hr class="mt-2 mb-2">
+  <div class="d-flex justify-content-between">
+    <span>{{ workout.muscleGroup.trim() || 'No muscle group provided' }}</span>
+    <span>{{ workout.exercisesIdList.length }} exercises - {{ workout.rounds }} rounds</span>
+  </div>
+</div>
