@@ -7,6 +7,7 @@ import { Result } from '../../../shared/models/result.model';
 import { ExerciseService } from '../../../shared/services/exercise.service';
 import { WorkoutService } from '../../../shared/services/workout.service';
 import { deepClone } from '../../../shared/utils/deep-clone';
+import { WorkoutActionService } from '../workout-action.service';
 
 @Component({
   selector: 'app-workout-action-panel',
@@ -15,7 +16,7 @@ import { deepClone } from '../../../shared/utils/deep-clone';
 })
 export class WorkoutActionPanelComponent implements OnInit {
   workout: Workout;
-  exercises: Array<Exercise>;
+  exercises: Array<Exercise> = [];
   currentExercise: Exercise;
   currentExerciseIndex: number;
   unitWord: string;
@@ -28,11 +29,13 @@ export class WorkoutActionPanelComponent implements OnInit {
   isRound: boolean;
   currentResults: Array<Result>;
   workoutFinished: boolean;
+  isSuccess: boolean;
 
   constructor(
     private exerciseService: ExerciseService,
     private workoutService: WorkoutService,
     private route: ActivatedRoute,
+    private workoutActionService: WorkoutActionService
   ) { }
 
   ngOnInit() {
@@ -59,11 +62,25 @@ export class WorkoutActionPanelComponent implements OnInit {
   }
 
   onRest() {
+    if (this.currentExercise.unitAmount > this.currentUnits) {
+      this.isSuccess = false;
+    }
     this.currentResults.push(new Result(
       this.finishedRounds + 1, this.currentUnits, this.currentTime,
     ));
+    this.workoutActionService.roundsInfoChanged.next({
+      exerciseName: this.currentExercise.name,
+      workoutRound: this.finishedWorkoutRounds + 1,
+      exerciseRound: this.finishedRounds,
+      exerciseUnits: this.currentExercise.unitAmount,
+      actualUnits: this.currentUnits,
+      exerciseTime: this.currentTime,
+      exerciseUnit: this.currentExercise.unit,
+    });
+
     this.roundJustFinished = false;
     this.currentTime = 0;
+    this.currentUnits = 0;
     this.currentTimer = setInterval(() => this.currentTime++, 1000);
     if (this.finishedRounds == this.currentExercise.roundAmount) {
       this.exerciseCompleted();
@@ -107,6 +124,7 @@ export class WorkoutActionPanelComponent implements OnInit {
   onSaveExercisesResults() {
     if (this.workoutFinished) {
       this.exerciseService.rewriteExercises(deepClone(this.exercises));
+      this.workoutService.setWorkoutCompleted(this.workout.id, this.isSuccess);
     }
   }
 
@@ -123,8 +141,10 @@ export class WorkoutActionPanelComponent implements OnInit {
     this.isRound = false;
     this.currentResults = [];
     this.workoutFinished = false;
+    this.isSuccess = true;
     clearInterval(this.currentTimer);
     this.exercises.forEach((exercise) => exercise.resetResults());
+    this.workoutActionService.roundsReseted.next();
   }
 
 }

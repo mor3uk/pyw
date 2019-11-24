@@ -1,31 +1,22 @@
 <table class="table text-dark text-center mt-3">
-  <caption>Push ups</caption>
+  <caption>{{ exerciseName }} - Workout round {{ workoutRound }}</caption>
   <thead>
-    <tr class="table-primary">
-      <th scope="col">Workout</th>
-      <th scope="col">Round</th>
-      <th scope="col">Repetitions</th>
-      <th scope="col">Time</th>
+    <tr class="table-info">
+      <td>Round</td>
+      <td>{{ unitWord }}</td>
+      <td>Time</td>
     </tr>
   </thead>
   <tbody>
-    <tr class="table-success">
-      <th scope="row">1</th>
-      <th>1</th>
-      <td>15 / 13</td>
-      <td>30</td>
-    </tr>
-    <tr class="table-warning">
-      <th scope="row">1</th>
-      <th>2</th>
-      <td>13 / 13</td>
-      <td>30</td>
-    </tr>
-    <tr class="table-danger">
-      <th scope="row">1</th>
-      <th>3</th>
-      <td>10 / 13</td>
-      <td>30</td>
+    <tr 
+      *ngFor="let exerciseRoundInfo of exerciseRoundsInfo" 
+      [ngClass]="{'table-success': exerciseUnits < exerciseRoundInfo.actualUnits,
+        'table-danger': exerciseUnits > exerciseRoundInfo.actualUnits,
+        'table-warning': exerciseUnits === exerciseRoundInfo.actualUnits }"
+      >
+      <td>{{ exerciseRoundInfo.exerciseRound }}</td>
+      <td>{{ exerciseRoundInfo.actualUnits }} / {{ exerciseUnits }}</td>
+      <td>{{ secondsToTimer(exerciseRoundInfo.exerciseTime) }}</td>
     </tr>
   </tbody>
 </table>

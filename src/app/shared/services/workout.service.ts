@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Workout } from '../models/workout.model';
 import { ExerciseService } from './exercise.service';
 import { deepClone } from '../utils/deep-clone';
+import { Exercise } from '../models/exercise.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,17 +24,24 @@ export class WorkoutService {
   }
 
   getWorkout(id: string): Workout {
-    return this.workouts.find((workout) => id === workout.id);
+    return deepClone(this.workouts.find((workout) => id === workout.id));
   }
 
   getLastWorkout(): Workout {
-    return this.workouts[this.workouts.length - 1];
+    return deepClone(this.workouts[this.workouts.length - 1]);
   }
 
-  getOwnExercises(id: string) {
+  getOwnExercises(id: string): Array<Exercise> {
     return deepClone(this.exerciseService.getExercises()
       .filter((exercise) => this.getWorkout(id)
         .exercisesIdList.includes(exercise.id)));
+  }
+
+  setWorkoutCompleted(id: string, succeeded: boolean) {
+    this.workouts = this.workouts.map((workout) => {
+      id === workout.id && (workout.status = { completed: true, succeeded });
+      return workout;
+    });
   }
 
 }

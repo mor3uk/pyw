@@ -50,8 +50,14 @@
         >{{ finishedRounds === currentExercise.roundAmount ? 'Finish' : 'Rest' }}</button>
       </div>
     </div>
-    <div class="alert alert-warning mt-3">
+    <div *ngIf="!workoutFinished" class="alert alert-warning mt-3">
       Notice: training can not be paused for resting time is provided!
+    </div>
+    <div 
+      *ngIf="workoutFinished" 
+      class="alert mt-3 text-center"
+      [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}"
+    >Workout is done, you {{ isSuccess ? 'succeeded' : 'failed' }}!
     </div>
     <div class="row mt-3">
       <div class="col">
@@ -66,7 +72,11 @@
         >Try again</button>
       </div>
       <div class="col">
-        <button class="btn btn-block btn-danger" title="Results are to be lost">Quit</button>
+        <button 
+          class="btn btn-block btn-danger" 
+          title="Results are to be lost"
+          [routerLink]="[ '/workout', 'new' ]"
+        >Quit</button>
       </div>
     </div>
   </div>

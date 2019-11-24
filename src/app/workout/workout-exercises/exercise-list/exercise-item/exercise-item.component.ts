@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Exercise } from '../../../../shared/models/exercise.model';
 import { ExerciseService } from '../../../../shared/services/exercise.service';
@@ -13,7 +14,10 @@ export class ExerciseItemComponent implements OnInit {
   roundWord: string = 'round';
   unitWord: string;
 
-  constructor(private exerciseService: ExerciseService) { }
+  constructor(
+    private exerciseService: ExerciseService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.unitWord = this.exercise.unit;
@@ -23,6 +27,7 @@ export class ExerciseItemComponent implements OnInit {
 
   onRemoveExercise() {
     this.exerciseService.removeCurrentExercise(this.exercise.id);
+    this.router.navigate(['workout', 'new']);
   }
 
 }

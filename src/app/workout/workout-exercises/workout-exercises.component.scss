@@ -1,0 +1,16 @@
+.workout-exercises-row {
+  position: relative;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.exercise-panel {
+  position: fixed;
+  width: 380px;
+}
+
+.exercise-list {
+  position: absolute;
+  width: 520px;
+  right: 15px;
+}

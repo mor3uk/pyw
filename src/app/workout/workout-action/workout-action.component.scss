@@ -1,12 +1,23 @@
-.active {
-  background-color: rgba(0, 0, 0, 0.15);
-  border-color: rgba(0, 0, 0, 0.15);
-}
-
 .no-exercises-alert {
   text-align: center;
   justify-content: center;
   height: 425px;
   display: flex;
   align-items: center;
+}
+
+.workout-action-row {
+  position: relative;
+  padding-left: 15px;
+}
+
+.workout-action-panel {
+  width: 450px;
+  position: fixed;
+}
+
+.workout-action-results {
+  width: 450px;
+  right: 15px;
+  position: absolute;
 }

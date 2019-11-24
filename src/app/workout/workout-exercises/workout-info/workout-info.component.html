@@ -1,29 +1,16 @@
-<h4 class="text-secondary">Workout info</h4>
-<div class="row mb-3">
-  <div class="col-md-5 pr-0">
-    <input 
-      class="form-control" 
-      type="text" 
-      name="muscle-group" 
-      placeholder="Muscle group..."
-      [(ngModel)]="muscleGroup"
-    >
-  </div>
-  <div class="col-md-3 pr-0">
-    <input 
-      class="form-control" 
-      type="number" 
-      name="workout-rounds" 
-      placeholder="Rounds..."
-      [(ngModel)]="rounds"
-    >
-  </div>
-  <div class="col-md-4">
-    <button 
-      class="btn btn-block btn-success" 
-      type="button"
-      [disabled]="isDisabled()"
-      (click)="onSaveWorkout()"
-    >Start workout</button>
+<div class="workout-info">
+  <h4 class="text-secondary">Workout info</h4>
+  <div class="row mb-3">
+    <div class="col-md-5 pr-0">
+      <input class="form-control" type="text" name="muscle-group" placeholder="Muscle group..."
+        [(ngModel)]="muscleGroup">
+    </div>
+    <div class="col-md-3 pr-0">
+      <input class="form-control" type="number" name="workout-rounds" placeholder="Rounds..." [(ngModel)]="rounds">
+    </div>
+    <div class="col-md-4">
+      <button class="btn btn-block btn-success" type="button" [disabled]="isDisabled()" (click)="onSaveWorkout()">Start
+        workout</button>
+    </div>
   </div>
 </div>

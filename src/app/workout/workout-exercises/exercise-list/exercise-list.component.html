@@ -1,7 +1,9 @@
-<div *ngIf="exercises.length === 0" class="alert alert-info no-exersises-alert">
-  <h5 class="alert-heading">No exercises added to the workout</h5>
-</div>
-<div *ngIf="exercises.length !== 0" class="exercises-list">
-  <app-exercise-item *ngFor="let exercise of exercises; let i = index" [exercise]="exercise">
-  </app-exercise-item>
+<div class="exercises-list">
+  <div *ngIf="exercises.length === 0" class="alert alert-info no-exersises-alert">
+    <h5 class="alert-heading">No exercises added to the workout</h5>
+  </div>
+  <div *ngIf="exercises.length !== 0">
+    <app-exercise-item *ngFor="let exercise of exercises; let i = index" [exercise]="exercise">
+    </app-exercise-item>
+  </div>
 </div>
