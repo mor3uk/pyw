@@ -1,4 +1,10 @@
 .results-item {
+  cursor: pointer;
+  transition-duration: 0.3s;
+  &:hover,
+  &.active {
+    border-width: 4px;
+  }
   &__dates {
     font-size: 13px;
   }

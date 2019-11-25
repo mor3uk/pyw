@@ -1,8 +1,10 @@
 <div 
   class="alert results-item"
-  [ngClass]="{'alert-info': workout.status.completed === false,
-    'alert-danger': workout.status.succeeded === false,
-    'alert-success': workout.status.succeeded === true}"
+  [ngClass]="{ 'alert-success': workout.status.succeeded === true,
+    'alert-danger': workout.status.succeeded === false && workout.status.completed === true,
+    'alert-info': workout.status.completed === false,
+    'active': workout.id === idPicked }"
+  (click)="onPickResult()"
 >
   <div class="results-item__dates d-flex justify-content-between">
     <span>Added {{ dateMessage(workout.createdAt) }}</span>

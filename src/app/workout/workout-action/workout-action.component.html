@@ -8,7 +8,7 @@
       *ngFor="let exerciseRoundsInfo of workoutRoundsInfo"
       [exerciseRoundsInfo]="exerciseRoundsInfo"
     ></app-workout-action-results>
-    <div *ngIf="workoutRoundsInfo.length === 0" class="alert alert-info no-exercises-alert mt-3">
+    <div *ngIf="workoutRoundsInfo.length === 0" class="alert alert-info not-found-alert no-exercises-alert mt-3">
       <h5>No completed exercises yet</h5>
     </div>
   </div>

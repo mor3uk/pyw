@@ -1,7 +1,19 @@
+html {
+  overflow-y: scroll;
+}
+
 body {
   padding-top: 65px;
 }
 
 .container {
   max-width: 960px;
+}
+
+.not-found-alert {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  background-color: #e3f2fd;
 }

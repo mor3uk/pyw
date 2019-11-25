@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ExerciseRoundsInfo } from '../exercise-rounds-info.model';
+import { ExerciseRoundsInfo } from '../../../shared/models/exercise-rounds-info.model';
 
 @Component({
   selector: 'app-workout-action-results',

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { WorkoutActionService } from './workout-action.service';
-import { ExerciseRoundsInfo } from './exercise-rounds-info.model';
+import { ExerciseRoundsInfo } from '../../shared/models/exercise-rounds-info.model';
 
 @Component({
   selector: 'app-workout-action',

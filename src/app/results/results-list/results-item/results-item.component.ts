@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Workout } from '../../../shared/models/workout.model';
 import { generateDateMessage } from '../../../shared/utils/date-message.util';
+import { ResultsService } from '../../results.service';
 
 @Component({
   selector: 'app-results-item',
@@ -10,14 +11,22 @@ import { generateDateMessage } from '../../../shared/utils/date-message.util';
 })
 export class ResultsItemComponent implements OnInit {
   @Input() workout: Workout;
+  idPicked: string;
 
-  constructor() { }
+  constructor(private resultsService: ResultsService) { }
 
   ngOnInit() {
+    this.resultsService.workoutResultPicked
+      .subscribe((workout) => this.idPicked = workout.id);
   }
 
   dateMessage(timestamp: number) {
     return generateDateMessage(timestamp);
+  }
+
+  onPickResult() {
+    this.resultsService.workoutResultPicked
+      .next(this.workout);
   }
 
 }

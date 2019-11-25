@@ -1,0 +1,11 @@
+<h3 class="text-info">Wokout results</h3>
+<div 
+  *ngIf="workoutRoundsInfo.length === 0" 
+  class="alert alert-info not-found-alert no-workout-picked mt-3"
+>
+  <h5 class="alert-heading">No workout picked</h5>
+</div>
+<app-workout-action-results
+  *ngFor="let exerciseRoundsInfo of workoutRoundsInfo"
+  [exerciseRoundsInfo]="exerciseRoundsInfo"
+></app-workout-action-results>

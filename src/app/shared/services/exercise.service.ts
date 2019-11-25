@@ -60,6 +60,8 @@ export class ExerciseService {
 
       return exerciseToRewrite || exercise;
     });
+
+    localStorage.setItem('exercises', JSON.stringify(this.exercises));
   }
 
   emptyCurrentExercises() {
@@ -67,7 +69,7 @@ export class ExerciseService {
   }
 
   saveExercises() {
-    this.exercises = deepClone(this.currentExercises);
+    this.exercises = [...this.exercises, ...deepClone(this.currentExercises)];
     localStorage.setItem('exercises', JSON.stringify(this.exercises));
   }
 

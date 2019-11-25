@@ -28,20 +28,18 @@ export const generateDateMessage = (timestemp: number): string => {
     return hours + ' hours ago';
   }
 
-  const wordsCollection = [
-    '',
-    'yesterday',
-    '2 days ago',
-    '3 days ago',
-    '4 days ago',
-    '5 days ago',
-    '6 days ago',
-    'a weak ago',
-  ];
+  const timeConstant = ' at ' + moment(timestemp).format('LT');
 
-  if (wordsCollection[days]) {
-    return wordsCollection[days] + ' at '
-      + moment(timestemp).format('LT');
+  if (days === 1) {
+    return '1 day ago' + timeConstant;
+  }
+
+  if (days < 7) {
+    return days + ' days ago' + timeConstant
+  }
+
+  if (days === 7) {
+    return 'a week ago ' + timeConstant;
   }
 
   return moment(timestemp).format('L') + ' at '
