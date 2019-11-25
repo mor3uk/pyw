@@ -1,10 +1,20 @@
 <div class="results-info">
   <h3 class="text-info">Wokout results</h3>
   <div 
-    *ngIf="workoutRoundsInfo.length === 0" 
+    *ngIf="workoutRoundsInfo.length === 0 && !workout" 
     class="alert alert-info not-found-alert no-workout-picked mt-3"
   >
     <h5 class="alert-heading">No workout picked</h5>
+  </div>
+  <div 
+    *ngIf="workout && !workout.status.completed" 
+    class="alert alert-info not-found-alert no-workout-picked mt-3"
+  >
+    <h5 class="alert-heading">No results, complete the workout</h5>
+    <button
+      [routerLink]="[ '/workout', 'train', workout.id ]"
+      class="btn btn-primary"
+    >Start workout</button>
   </div>
   <app-workout-action-results
     *ngFor="let exerciseRoundsInfo of workoutRoundsInfo"

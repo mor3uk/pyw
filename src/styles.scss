@@ -13,7 +13,8 @@ body {
 .not-found-alert {
   text-align: center;
   justify-content: center;
+  flex-direction: column;
   display: flex;
-  align-items: center;
   background-color: #e3f2fd;
+  align-items: center;
 }

@@ -13,6 +13,7 @@ import { deepClone } from '../../shared/utils/deep-clone';
 })
 export class ResultsInfoComponent implements OnInit {
   workoutRoundsInfo: Array<ExerciseRoundsInfo>[] = [];
+  workout: Workout;
 
   constructor(
     private resultsService: ResultsService,
@@ -22,31 +23,33 @@ export class ResultsInfoComponent implements OnInit {
   ngOnInit() {
     this.resultsService.workoutResultPicked
       .subscribe((workout: Workout) => {
+        this.workout = workout;
         this.workoutRoundsInfo = [];
-        for (let i = 0; i < workout.rounds; i++) {
+        
+        if (workout.status.completed) {
+          for (let i = 0; i < workout.rounds; i++) {
 
-          workout.exercisesIdList.forEach((exerciseId) => {
-            let exerciseRoundsInfos: Array<ExerciseRoundsInfo> = [];
-            let exercise = this.exerciseService.getExerciseById(exerciseId);
+            workout.exercisesIdList.forEach((exerciseId) => {
+              let exerciseRoundsInfos: Array<ExerciseRoundsInfo> = [];
+              let exercise = this.exerciseService.getExerciseById(exerciseId);
 
-            for (let j = 0; j < exercise.roundAmount; j++) {
-              exerciseRoundsInfos.push({
-                exerciseName: exercise.name,
-                workoutRound: i + 1,
-                exerciseRound: j + 1,
-                exerciseUnits: exercise.unitAmount,
-                actualUnits: exercise.result.results[i][j].units,
-                exerciseTime: exercise.result.results[i][j].time,
-                exerciseUnit: exercise.unit,
-              });
-            }
+              for (let j = 0; j < exercise.roundAmount; j++) {
+                exerciseRoundsInfos.push({
+                  exerciseName: exercise.name,
+                  workoutRound: i + 1,
+                  exerciseRound: j + 1,
+                  exerciseUnits: exercise.unitAmount,
+                  actualUnits: exercise.result.results[i][j].units,
+                  exerciseTime: exercise.result.results[i][j].time,
+                  exerciseUnit: exercise.unit,
+                });
+              }
 
-            this.workoutRoundsInfo.push(deepClone(exerciseRoundsInfos));
-          });
+              this.workoutRoundsInfo.push(deepClone(exerciseRoundsInfos));
+            });
 
+          }
         }
-
-
       });
   }
 

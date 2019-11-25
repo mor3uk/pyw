@@ -154,7 +154,7 @@ export class WorkoutActionPanelComponent implements OnInit {
     this.isSuccess = true;
     clearInterval(this.currentTimer);
     clearInterval(this.workoutTimer);
-    this.exercises.forEach((exercise) => exercise.resetResults());
+    this.exercises.forEach((exercise) => exercise.result.results = []);
     this.workoutActionService.roundsReseted.next();
   }
 
