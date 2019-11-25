@@ -1,12 +1,14 @@
-<div 
-  *ngIf="workouts.length === 0" 
-  class="alert alert-info not-found-alert no-workouts-alert mt-4"
->
-  <h5 class="alert-heading">No workouts found</h5>
+<div class="results-list">
+  <div 
+    *ngIf="workouts.length === 0" 
+    class="alert alert-info not-found-alert no-workouts-alert mt-4"
+  >
+    <h5 class="alert-heading">No workouts found</h5>
+  </div>
+  <ul class="p-0 mt-4">
+    <app-results-item 
+      *ngFor="let workout of workouts"
+      [workout]="workout"
+    ></app-results-item>
+  </ul>
 </div>
-<ul class="p-0 mt-4">
-  <app-results-item 
-    *ngFor="let workout of workouts"
-    [workout]="workout"
-  ></app-results-item>
-</ul>
