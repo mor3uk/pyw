@@ -15,8 +15,9 @@
       <p class="card-text mb-0">{{ exercise.note.trim() || 'No note provided...' }}</p>
       <button 
         class="btn btn-outline-info btn-sm exercise-btn" 
-        [routerLink]="[ '/workout', 'edit', exercise.id ]">
-      Edit</button>
+        [routerLink]="[ '/workout', 'exercises', exercise.id ]"
+        routerLinkActive="btn-info text-white"
+      >Edit</button>
     </div>
   </div>
 </div>

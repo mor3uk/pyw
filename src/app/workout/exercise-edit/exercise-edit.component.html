@@ -1,0 +1,80 @@
+<form [formGroup]="exerciseForm" (ngSubmit)="onSubmit()">
+  <h3 *ngIf="editMode" class="text-primary">Edit an exercise</h3>
+  <h3 *ngIf="!editMode" class="text-success">Add a new exercise</h3>
+  <div class="form-group">
+    <label class="text-secondary" for="name">Exercise name</label>
+    <input 
+      type="text" 
+      class="form-control" 
+      id="name" 
+      formControlName="name"
+      placeholder="Type the exercise name..." 
+      trim="blur"
+    >
+    <small 
+      *ngIf="exerciseForm.controls.name.errors && exerciseForm.controls.name.touched" 
+      class="error-message"
+    >This field is required
+    </small>
+  </div>
+  <div class="form-group">
+    <label class="text-secondary" for="note">Exercise note</label>
+    <textarea 
+      class="form-control" 
+      id="note" 
+      formControlName="note" 
+      placeholder="A little about the exercise"
+      trim="blur"
+    ></textarea>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label class="text-secondary" for="roundAmount">Rounds</label>
+      <input 
+        type="number" 
+        class="form-control" 
+        id="roundAmount" 
+        formControlName="roundAmount" 
+        min="1"
+        max="5"
+      >
+    </div>
+    <div class="form-group col-md-6 p-0">
+      <label class="text-secondary" for="unit">Type</label>
+      <select 
+        id="unit" 
+        formControlName="unit" 
+        class="form-control" 
+      >
+        <option value="repetition">By repetitions</option>
+        <option value="second">By seconds</option>
+      </select>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="text-secondary" for="unitAmount">
+        {{ exerciseForm.value.unit === 'repetition' ? 'Reps' : 'Time' }}
+      </label>
+      <input 
+        type="number" 
+        class="form-control" 
+        id="unitAmount" 
+        formControlName="unitAmount" 
+        min="1"
+        max="200"
+      >
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <small 
+        *ngIf="exerciseForm.invalid && !exerciseForm.untouched" 
+        class="error-message d-block mb-2">Fill in the fields correctly
+      </small>
+    </div>
+  </div>
+  <button 
+    class="btn"
+    [ngClass]="{ 'btn-success': !editMode, 'btn-primary': editMode }"
+    [disabled]="exerciseForm.invalid"
+  >{{ editMode ? 'Save changes' : 'Add to the list' }}</button>
+</form>

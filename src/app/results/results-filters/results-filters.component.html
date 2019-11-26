@@ -9,6 +9,7 @@
       class="form-control mt-1 mb-1" 
       placeholder="Muscle group..."  
       (input)="onUpdateFilters()"
+      trim="blur"
     >
     </div>
     <div *ngIf="status === 'completed' || succeeded" class="col-md">

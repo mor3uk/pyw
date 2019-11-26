@@ -1,0 +1,20 @@
+<div class="row workout-exercises-row">
+  <div class="exercise-panel">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="workout-info">
+    <app-workout-form [exercisesNumber]="exercises.length"></app-workout-form>
+    <div class="exercises-list">
+      <div 
+        *ngIf="exercises.length === 0" 
+        class="alert alert-info not-found-alert no-exersises-alert"
+      >
+        <h5 class="alert-heading">No exercises added to the workout</h5>
+      </div>
+      <app-exercise-item 
+        *ngFor="let exercise of exercises" 
+        [exercise]="exercise"
+      ></app-exercise-item>
+    </div>
+  </div>
+</div>

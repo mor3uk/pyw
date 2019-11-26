@@ -67,32 +67,41 @@ export class WorkoutActionPanelComponent implements OnInit {
     this.finishedRounds++;
   }
 
-  onRest() {
-    if (this.currentExercise.unitAmount > this.currentUnits) {
-      this.isSuccess = false;
-    }
-    this.currentResults.push(new Result(
-      this.finishedRounds + 1,
-       this.currentUnits,
-        this.currentTime,
-    ));
-    this.workoutActionService.roundsInfoChanged.next({
-      exerciseName: this.currentExercise.name,
-      workoutRound: this.finishedWorkoutRounds + 1,
-      exerciseRound: this.finishedRounds,
-      exerciseUnits: this.currentExercise.unitAmount,
-      actualUnits: this.currentUnits,
-      exerciseTime: this.currentTime,
-      exerciseUnit: this.currentExercise.unit,
-    });
+  enableRest() {
+    return !isNaN(this.currentUnits) 
+      && this.currentUnits > 0 
+      && this.currentUnits < 200;
+  }
 
-    this.roundJustFinished = false;
-    this.currentTime = 0;
-    this.currentUnits = 0;
-    this.currentTimer = setInterval(() => this.currentTime++, 1000);
-    if (this.finishedRounds == this.currentExercise.roundAmount) {
-      this.exerciseCompleted();
+  onRest() {
+    if (this.enableRest()) {
+      if (this.currentExercise.unitAmount > this.currentUnits) {
+        this.isSuccess = false;
+      }
+      this.currentResults.push(new Result(
+        this.finishedRounds + 1,
+        this.currentUnits,
+        this.currentTime,
+      ));
+      this.workoutActionService.roundsInfoChanged.next({
+        exerciseName: this.currentExercise.name,
+        workoutRound: this.finishedWorkoutRounds + 1,
+        exerciseRound: this.finishedRounds,
+        exerciseUnits: this.currentExercise.unitAmount,
+        actualUnits: this.currentUnits,
+        exerciseTime: this.currentTime,
+        exerciseUnit: this.currentExercise.unit,
+      });
+
+      this.roundJustFinished = false;
+      this.currentTime = 0;
+      this.currentUnits = 1;
+      this.currentTimer = setInterval(() => this.currentTime++, 1000);
+      if (this.finishedRounds == this.currentExercise.roundAmount) {
+        this.exerciseCompleted();
+      }
     }
+
   }
 
   exerciseCompleted() {
@@ -146,7 +155,7 @@ export class WorkoutActionPanelComponent implements OnInit {
     this.unitWord = this.currentExercise.unitAmount !== 1
       ? this.currentExercise.unit + 's' : this.currentExercise.unit;
     this.currentTime = 0;
-    this.currentUnits = 0;
+    this.currentUnits = 1;
     this.finishedRounds = 0;
     this.finishedWorkoutRounds = 0;
     this.workoutTime = 0;

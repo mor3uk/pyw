@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Exercise } from '../../../../shared/models/exercise.model';
-import { ExerciseService } from '../../../../shared/services/exercise.service';
+import { Exercise } from '../../../shared/models/exercise.model';
+import { ExerciseService } from '../../../shared/services/exercise.service';
 
 @Component({
   selector: 'app-exercise-item',
@@ -31,7 +31,7 @@ export class ExerciseItemComponent implements OnInit {
 
   onRemoveExercise() {
     this.exerciseService.removeCurrentExercise(this.exercise.id);
-    this.router.navigate(['workout', 'new']);
+    this.router.navigate(['workout', 'exercises']);
   }
 
 }

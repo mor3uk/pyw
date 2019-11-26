@@ -3,6 +3,9 @@
   transition-duration: 0.3s;
   &:hover,
   &.active {
+    padding: 1rem 1.5rem;
+  }
+  &.active {
     border-width: 4px;
   }
   &__dates {

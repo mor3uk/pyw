@@ -40,13 +40,21 @@
         </label>
       </div>
       <div class="col-3">
-        <input id="units" [(ngModel)]="currentUnits" class="form-control" type="number">
+        <input 
+          id="units" 
+          [(ngModel)]="currentUnits" 
+          class="form-control" 
+          type="number"
+          min="1"
+          max="200"
+        >
       </div>
       <div class="col-4">
         <button 
           class="btn btn-info btn-block"
           (click)="onRest()"
           [ngClass]="{'btn-danger': finishedRounds === currentExercise.roundAmount}"
+          [disabled]="!enableRest()"
         >{{ finishedRounds === currentExercise.roundAmount ? 'Finish' : 'Rest' }}</button>
       </div>
     </div>
@@ -75,7 +83,7 @@
         <button 
           class="btn btn-block btn-danger" 
           title="Results are to be lost"
-          [routerLink]="[ '/workout', 'new' ]"
+          [routerLink]="[ '/workout', 'exercises' ]"
         >Quit</button>
       </div>
     </div>

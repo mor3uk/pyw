@@ -28,10 +28,14 @@ export class WorkoutService {
     }
   }
 
-  addWorkout(workout: Workout) {
+  addWorkout(muscleGroup: string, rounds: number) {
+    const listIds: string[] = this.exerciseService
+      .currentExercises.map((exercise) => exercise.id);
+    const workout = new Workout(muscleGroup, rounds, listIds);
+    this.workouts.push(workout);
+
     this.exerciseService.saveExercises();
     this.exerciseService.emptyCurrentExercises();
-    this.workouts.push(workout);
 
     localStorage.setItem('workouts', JSON.stringify(this.workouts));
   }
