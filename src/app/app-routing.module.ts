@@ -6,7 +6,7 @@ import { WorkoutInfoComponent } from './workout/workout-info/workout-info.compon
 import { WorkoutActionComponent } from './workout/workout-action/workout-action.component';
 import { ResultsComponent } from './results/results.component';
 import { ExerciseEditComponent } from './workout/exercise-edit/exercise-edit.component';
-
+import { ResultsInfoComponent } from './results-info/results-info.component';
 
 const routes: Routes = [
   {
@@ -21,7 +21,10 @@ const routes: Routes = [
       { path: 'train/:id', component: WorkoutActionComponent },
     ]
   },
-  { path: 'results', component: ResultsComponent },
+  { path: 'results', component: ResultsComponent, children: [
+    { path: '', component: ResultsInfoComponent },
+    { path: ':id', component: ResultsInfoComponent },
+  ] },
   { path: '**', redirectTo: 'workout/exercises' },
 ];
 

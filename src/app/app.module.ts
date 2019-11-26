@@ -15,8 +15,8 @@ import { WorkoutActionPanelComponent } from './workout/workout-action/workout-ac
 import { WorkoutActionResultsComponent } from './workout/workout-action/workout-action-results/workout-action-results.component';
 import { ResultsListComponent } from './results/results-list/results-list.component';
 import { ResultsFiltersComponent } from './results/results-filters/results-filters.component';
-import { ResultsItemComponent } from './results/results-list/results-item/results-item.component';
-import { ResultsInfoComponent } from './results/results-info/results-info.component';
+import { ResultsItemComponent } from './results/results-item/results-item.component';
+import { ResultsInfoComponent } from './results-info/results-info.component';
 import { WorkoutFormComponent } from './workout/workout-info/workout-form/workout-form.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 

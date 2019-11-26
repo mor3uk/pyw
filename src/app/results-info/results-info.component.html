@@ -17,7 +17,7 @@
     *ngIf="workout && !workout.status.completed" 
     class="alert alert-info not-found-alert no-workout-picked mt-3"
   >
-    <h5 class="alert-heading">No results, complete the workout</h5>
+    <h5 class="alert-heading mb-3">No results, complete the workout</h5>
     <button
       [routerLink]="[ '/workout', 'train', workout.id ]"
       class="btn btn-primary"
