@@ -25,30 +25,31 @@ export class ResultsInfoComponent implements OnInit {
       .subscribe((workout: Workout) => {
         this.workout = workout;
         this.workoutRoundsInfo = [];
-        
-        if (workout.status.completed) {
-          for (let i = 0; i < workout.rounds; i++) {
 
-            workout.exercisesIdList.forEach((exerciseId) => {
-              let exerciseRoundsInfos: Array<ExerciseRoundsInfo> = [];
-              let exercise = this.exerciseService.getExerciseById(exerciseId);
+        if (!workout.status.completed) {
+          return;
+        }
+        for (let i = 0; i < workout.rounds; i++) {
 
-              for (let j = 0; j < exercise.roundAmount; j++) {
-                exerciseRoundsInfos.push({
-                  exerciseName: exercise.name,
-                  workoutRound: i + 1,
-                  exerciseRound: j + 1,
-                  exerciseUnits: exercise.unitAmount,
-                  actualUnits: exercise.result.results[i][j].units,
-                  exerciseTime: exercise.result.results[i][j].time,
-                  exerciseUnit: exercise.unit,
-                });
-              }
+          workout.exercisesIdList.forEach((exerciseId) => {
+            let exerciseRoundsInfos: Array<ExerciseRoundsInfo> = [];
+            let exercise = this.exerciseService.getExerciseById(exerciseId);
 
-              this.workoutRoundsInfo.push(deepClone(exerciseRoundsInfos));
-            });
+            for (let j = 0; j < exercise.roundAmount; j++) {
+              exerciseRoundsInfos.push({
+                exerciseName: exercise.name,
+                workoutRound: i + 1,
+                exerciseRound: j + 1,
+                exerciseUnits: exercise.unitAmount,
+                actualUnits: exercise.result.results[i][j].units,
+                exerciseTime: exercise.result.results[i][j].time,
+                exerciseUnit: exercise.unit,
+              });
+            }
 
-          }
+            this.workoutRoundsInfo.push(deepClone(exerciseRoundsInfos));
+          });
+
         }
       });
   }

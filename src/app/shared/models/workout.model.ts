@@ -13,6 +13,6 @@ export class Workout {
   constructor(
     public muscleGroup: string = '',
     public rounds: number,
-    public exercisesIdList: Array<string>,
+    public exercisesIdList: string[],
   ) { }
 }

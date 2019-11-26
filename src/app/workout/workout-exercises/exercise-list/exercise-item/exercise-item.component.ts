@@ -21,8 +21,12 @@ export class ExerciseItemComponent implements OnInit {
 
   ngOnInit() {
     this.unitWord = this.exercise.unit;
-    if (this.exercise.unitAmount !== 1) { this.unitWord += 's'; }
-    if (this.exercise.roundAmount !== 1) { this.roundWord += 's'; }
+    if (this.exercise.unitAmount !== 1) {
+      this.unitWord += 's';
+    }
+    if (this.exercise.roundAmount !== 1) {
+      this.roundWord += 's';
+    }
   }
 
   onRemoveExercise() {

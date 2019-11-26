@@ -72,7 +72,9 @@ export class WorkoutActionPanelComponent implements OnInit {
       this.isSuccess = false;
     }
     this.currentResults.push(new Result(
-      this.finishedRounds + 1, this.currentUnits, this.currentTime,
+      this.finishedRounds + 1,
+       this.currentUnits,
+        this.currentTime,
     ));
     this.workoutActionService.roundsInfoChanged.next({
       exerciseName: this.currentExercise.name,
@@ -114,7 +116,8 @@ export class WorkoutActionPanelComponent implements OnInit {
     this.finishedRounds = 0;
     this.currentExercise = this.exercises[this.currentExerciseIndex];
     this.unitWord = this.currentExercise.unitAmount !== 1
-      ? this.currentExercise.unit + 's' : this.currentExercise.unit;
+      ? this.currentExercise.unit + 's'
+      : this.currentExercise.unit;
   }
 
   secondsToTimer() {
