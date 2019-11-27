@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Exercise } from '../../shared/models/exercise.model';
-import { ExerciseService } from '../../shared/services/exercise.service';
+import { Exercise } from '../../../shared/models/exercise.model';
+import { ExerciseService } from '../../../shared/services/exercise.service';
 
 @Component({
-  selector: 'app-exercise-edit',
-  templateUrl: './exercise-edit.component.html',
-  styleUrls: ['./exercise-edit.component.scss']
+  selector: 'app-exercise-form',
+  templateUrl: './exercise-form.component.html',
+  styleUrls: ['./exercise-form.component.scss']
 })
-export class ExerciseEditComponent implements OnInit {
+export class ExerciseFormComponent implements OnInit {
   editMode: boolean = false;
   id: string;
   exerciseForm: FormGroup;
@@ -23,8 +23,11 @@ export class ExerciseEditComponent implements OnInit {
 
   ngOnInit() {
     this.exerciseForm = new FormGroup({
-      'name': new FormControl('', [Validators.required, Validators.maxLength(25)]),
-      'note': new FormControl(''),
+      'name': new FormControl('', [
+        Validators.required,
+        Validators.maxLength(25)
+      ]),
+      'note': new FormControl('', Validators.maxLength(80)),
       'roundAmount': new FormControl(1, [
         Validators.required,
         Validators.min(1),

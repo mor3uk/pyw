@@ -6,7 +6,7 @@ import { Exercise } from '../../../shared/models/exercise.model';
 import { Result } from '../../../shared/models/result.model';
 import { ExerciseService } from '../../../shared/services/exercise.service';
 import { WorkoutService } from '../../../shared/services/workout.service';
-import { WorkoutActionService } from '../workout-action.service';
+import { WorkoutActionService } from '../workout-action/workout-action.service';
 
 @Component({
   selector: 'app-workout-action-panel',

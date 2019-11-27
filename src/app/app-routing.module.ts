@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { WorkoutComponent } from './workout/workout.component';
-import { WorkoutInfoComponent } from './workout/workout-info/workout-info.component';
-import { WorkoutActionComponent } from './workout/workout-action/workout-action.component';
+import { WorkoutInfoComponent } from './workout/workout-create/workout-info/workout-info.component';
+import { WorkoutActionComponent } from './workout/workout-train/workout-action/workout-action.component';
 import { ResultsComponent } from './results/results.component';
-import { ExerciseEditComponent } from './workout/exercise-edit/exercise-edit.component';
-import { ResultsInfoComponent } from './results-info/results-info.component';
+import { ExerciseFormComponent } from './workout/workout-create/exercise-form/exercise-form.component';
+import { ResultsInfoComponent } from './results/results-info/results-info.component';
 
 const routes: Routes = [
   {
@@ -14,8 +14,8 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'exercises' },
       {
         path: 'exercises', component: WorkoutInfoComponent, children: [
-          { path: '', component: ExerciseEditComponent },
-          { path: ':id', component: ExerciseEditComponent },
+          { path: '', component: ExerciseFormComponent },
+          { path: ':id', component: ExerciseFormComponent },
         ]
       },
       { path: 'train/:id', component: WorkoutActionComponent },

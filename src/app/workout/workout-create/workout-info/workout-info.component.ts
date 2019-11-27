@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { Exercise } from '../../shared/models/exercise.model';
-import { ExerciseService } from '../../shared/services/exercise.service';
+import { Exercise } from '../../../shared/models/exercise.model';
+import { ExerciseService } from '../../../shared/services/exercise.service';
 
 @Component({
   selector: 'app-workout-info',

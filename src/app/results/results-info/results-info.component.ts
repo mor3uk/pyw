@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Workout } from '../shared/models/workout.model';
-import { ExerciseRoundsInfo } from '../shared/models/exercise-rounds-info.model';
-import { ExerciseService } from '../shared/services/exercise.service';
-import { WorkoutService } from '../shared/services/workout.service';
+import { Workout } from '../../shared/models/workout.model';
+import { ExerciseRoundsInfo } from '../../shared/models/exercise-rounds-info.model';
+import { ExerciseService } from '../../shared/services/exercise.service';
+import { WorkoutService } from '../../shared/services/workout.service';
 
 @Component({
   selector: 'app-results-info',
