@@ -83,6 +83,14 @@ export class ExerciseService {
     localStorage.setItem('exercises', JSON.stringify(this.exercises));
   }
 
+  removeExercisesByIdList(ids: string[]) {
+    this.exercises = this.exercises.filter((exercise) => {
+      return !ids.includes(exercise.id);
+    });
+
+    localStorage.setItem('exercises', JSON.stringify(this.exercises));
+  }
+
   removeCurrentExercise(id: string) {
     this.currentExercises = this.currentExercises
       .filter((exercise) => id !== exercise.id);

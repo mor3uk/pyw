@@ -19,6 +19,8 @@ export class ResultsListComponent implements OnInit {
       .subscribe((filters) => {
         this.workouts = this.workoutService.getFilteredWorkouts(filters);
       });
+    this.workoutService.workoutWasRemoved
+      .subscribe(() => this.workouts = this.workoutService.getWorkouts());
   }
 
 }

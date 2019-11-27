@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Workout } from '../../shared/models/workout.model';
 import { ExerciseRoundsInfo } from '../../shared/models/exercise-rounds-info.model';
@@ -14,11 +14,13 @@ import { WorkoutService } from '../../shared/services/workout.service';
 export class ResultsInfoComponent implements OnInit {
   workoutRoundsInfo: Array<ExerciseRoundsInfo>[] = [];
   workout: Workout;
+  id: string;
 
   constructor(
     private exerciseService: ExerciseService,
     private workoutService: WorkoutService,
     private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -26,7 +28,7 @@ export class ResultsInfoComponent implements OnInit {
       if (!id) {
         return;
       }
-
+      this.id = id;
       this.workout = this.workoutService.getWorkout(id);
       this.workoutRoundsInfo = [];
 
@@ -57,6 +59,11 @@ export class ResultsInfoComponent implements OnInit {
         });
       }
     })
+  }
+
+  onRemoveWorkout() {
+    this.workoutService.removeWorkout(this.id);
+    this.router.navigate(['results']);
   }
 
 }

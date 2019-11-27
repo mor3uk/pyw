@@ -13,6 +13,7 @@ import { WorkoutFilters } from '../models/workout-filters.model';
 export class WorkoutService {
   workouts: Array<Workout> = [];
   workoutFiltersChanged = new Subject<WorkoutFilters>();
+  workoutWasRemoved = new Subject();
 
   constructor(private exerciseService: ExerciseService) {
     try {
@@ -81,6 +82,16 @@ export class WorkoutService {
 
   getLastWorkout(): Workout {
     return this.workouts[this.workouts.length - 1];
+  }
+
+  removeWorkout(id: string) {
+    this.exerciseService.removeExercisesByIdList(
+      this.getWorkout(id).exercisesIdList
+    );
+    this.workouts = this.workouts.filter((workout) => workout.id !== id);
+    this.workoutWasRemoved.next();
+
+    localStorage.setItem('workouts', JSON.stringify(this.workouts));
   }
 
   getOwnExercises(id: string): Array<Exercise> {
