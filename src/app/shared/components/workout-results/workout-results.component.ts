@@ -3,11 +3,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ExerciseRoundsInfo } from '../../models/exercise-rounds-info.model';
 
 @Component({
-  selector: 'app-workout-action-results',
-  templateUrl: './workout-action-results.component.html',
-  styleUrls: ['./workout-action-results.component.scss']
+  selector: 'app-workout-results',
+  templateUrl: './workout-results.component.html',
+  styleUrls: ['./workout-results.component.scss']
 })
-export class WorkoutActionResultsComponent implements OnInit {
+export class WorkoutResultsComponent implements OnInit {
   @Input() exerciseRoundsInfo: Array<ExerciseRoundsInfo> = [];
   exerciseName: string;
   workoutRound: number;
