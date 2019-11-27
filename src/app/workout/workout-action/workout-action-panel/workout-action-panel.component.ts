@@ -6,7 +6,6 @@ import { Exercise } from '../../../shared/models/exercise.model';
 import { Result } from '../../../shared/models/result.model';
 import { ExerciseService } from '../../../shared/services/exercise.service';
 import { WorkoutService } from '../../../shared/services/workout.service';
-import { deepClone } from '../../../shared/utils/deep-clone';
 import { WorkoutActionService } from '../workout-action.service';
 
 @Component({
@@ -19,7 +18,6 @@ export class WorkoutActionPanelComponent implements OnInit {
   exercises: Array<Exercise> = [];
   currentExercise: Exercise;
   currentExerciseIndex: number;
-  unitWord: string;
   currentTimer;
   currentTime: number;
   currentUnits: number;
@@ -68,8 +66,8 @@ export class WorkoutActionPanelComponent implements OnInit {
   }
 
   enableRest() {
-    return !isNaN(this.currentUnits) 
-      && this.currentUnits > 0 
+    return !isNaN(this.currentUnits)
+      && this.currentUnits > 0
       && this.currentUnits < 200;
   }
 
@@ -124,15 +122,6 @@ export class WorkoutActionPanelComponent implements OnInit {
 
     this.finishedRounds = 0;
     this.currentExercise = this.exercises[this.currentExerciseIndex];
-    this.unitWord = this.currentExercise.unitAmount !== 1
-      ? this.currentExercise.unit + 's'
-      : this.currentExercise.unit;
-  }
-
-  secondsToTimer() {
-    const date = new Date(null);
-    date.setSeconds(this.currentTime);
-    return date.toISOString().substr(14, 5);
   }
 
   readyToStart() {
@@ -141,9 +130,12 @@ export class WorkoutActionPanelComponent implements OnInit {
 
   onSaveExercisesResults() {
     if (this.workoutFinished) {
-      this.exerciseService.rewriteExercises(deepClone(this.exercises));
+      this.exerciseService.rewriteExercises(this.exercises);
       this.workoutService.setWorkoutCompleted(
-        this.workout.id, this.isSuccess, this.workoutTime);
+        this.workout.id,
+        this.isSuccess,
+        this.workoutTime
+      );
 
       this.router.navigate(['results']);
     }
@@ -152,8 +144,6 @@ export class WorkoutActionPanelComponent implements OnInit {
   setDefaultState() {
     this.currentExercise = this.exercises[0];
     this.currentExerciseIndex = 0;
-    this.unitWord = this.currentExercise.unitAmount !== 1
-      ? this.currentExercise.unit + 's' : this.currentExercise.unit;
     this.currentTime = 0;
     this.currentUnits = 1;
     this.finishedRounds = 0;

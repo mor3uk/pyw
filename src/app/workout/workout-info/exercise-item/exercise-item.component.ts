@@ -11,22 +11,13 @@ import { ExerciseService } from '../../../shared/services/exercise.service';
 })
 export class ExerciseItemComponent implements OnInit {
   @Input() exercise: Exercise;
-  roundWord: string = 'round';
-  unitWord: string;
 
   constructor(
     private exerciseService: ExerciseService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.unitWord = this.exercise.unit;
-    if (this.exercise.unitAmount !== 1) {
-      this.unitWord += 's';
-    }
-    if (this.exercise.roundAmount !== 1) {
-      this.roundWord += 's';
-    }
   }
 
   onRemoveExercise() {

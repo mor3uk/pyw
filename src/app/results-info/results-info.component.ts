@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Workout } from '../shared/models/workout.model';
 import { ExerciseRoundsInfo } from '../shared/models/exercise-rounds-info.model';
 import { ExerciseService } from '../shared/services/exercise.service';
-import { deepClone } from '../shared/utils/deep-clone';
 import { WorkoutService } from '../shared/services/workout.service';
 
 @Component({
@@ -33,10 +32,9 @@ export class ResultsInfoComponent implements OnInit {
 
       if (!this.workout.status.completed) {
         return;
-      } 
+      }
 
       for (let i = 0; i < this.workout.rounds; i++) {
-
         this.workout.exercisesIdList.forEach((exerciseId) => {
           let exerciseRoundsInfos: Array<ExerciseRoundsInfo> = [];
           let exercise = this.exerciseService.getExerciseById(exerciseId);
@@ -53,7 +51,9 @@ export class ResultsInfoComponent implements OnInit {
             });
           }
 
-          this.workoutRoundsInfo.push(deepClone(exerciseRoundsInfos));
+          this.workoutRoundsInfo.push(
+            exerciseRoundsInfos.map((item) => ({ ...item }))
+          );
         });
       }
     })

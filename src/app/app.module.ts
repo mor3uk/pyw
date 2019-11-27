@@ -19,6 +19,9 @@ import { ResultsItemComponent } from './results/results-item/results-item.compon
 import { ResultsInfoComponent } from './results-info/results-info.component';
 import { WorkoutFormComponent } from './workout/workout-info/workout-form/workout-form.component';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
+import { PluralPipe } from './shared/pipes/pluralize.pipe';
+import { TimerPipe } from './shared/pipes/timer.pipe';
+import { DatediffPipe } from './shared/pipes/datediff.pipe';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
     ResultsItemComponent,
     ResultsInfoComponent,
     WorkoutFormComponent,
+    PluralPipe,
+    TimerPipe,
+    DatediffPipe,
   ],
   imports: [
     BrowserModule,

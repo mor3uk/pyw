@@ -4,7 +4,6 @@ import moment from 'moment';
 
 import { Workout } from '../models/workout.model';
 import { ExerciseService } from './exercise.service';
-import { deepClone } from '../utils/deep-clone';
 import { Exercise } from '../models/exercise.model';
 import { WorkoutFilters } from '../models/workout-filters.model';
 
@@ -41,11 +40,11 @@ export class WorkoutService {
   }
 
   getWorkouts(): Array<Workout> {
-    return deepClone(this.workouts);
+    return this.workouts;
   }
 
   getWorkout(id: string): Workout {
-    return deepClone(this.workouts.find((workout) => id === workout.id));
+    return this.workouts.find((workout) => id === workout.id);
   }
 
   getFilteredWorkouts(filters: WorkoutFilters = {}) {
@@ -62,7 +61,8 @@ export class WorkoutService {
         statusMatch = workout.status.completed === filters.status;
       }
       if (filters.succeeded !== null) {
-        succeededMatch = workout.status.succeeded === filters.succeeded;
+        succeededMatch = workout.status.succeeded === filters.succeeded
+          && workout.status.completed;
       }
 
       return muscleGroupMatch && statusMatch && succeededMatch;
@@ -80,13 +80,13 @@ export class WorkoutService {
   }
 
   getLastWorkout(): Workout {
-    return deepClone(this.workouts[this.workouts.length - 1]);
+    return this.workouts[this.workouts.length - 1];
   }
 
   getOwnExercises(id: string): Array<Exercise> {
-    return deepClone(this.exerciseService.getExercises()
+    return this.exerciseService.getExercises()
       .filter((exercise) => this.getWorkout(id)
-        .exercisesIdList.includes(exercise.id)));
+        .exercisesIdList.includes(exercise.id));
   }
 
   setWorkoutCompleted(id: string, succeeded: boolean, workoutTime: number) {
@@ -101,5 +101,4 @@ export class WorkoutService {
 
     localStorage.setItem('workouts', JSON.stringify(this.workouts));
   }
-
 }

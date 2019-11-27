@@ -13,9 +13,7 @@ export class ResultsFiltersComponent implements OnInit {
   sortBy: 'date-creation' | 'date-completion' | 'time-completion' = 'date-creation';
   succeeded: string = '';
 
-  constructor(private workoutService: WorkoutService) {
-
-  }
+  constructor(private workoutService: WorkoutService) { }
 
   ngOnInit() {
   }

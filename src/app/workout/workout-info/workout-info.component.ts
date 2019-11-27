@@ -18,7 +18,7 @@ export class WorkoutInfoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.exercises = this.exerciseService.getCurrentExercises();
     this.exerciseSubscription = this.exerciseService.exercisesChanged
-      .subscribe((exercises) => this.exercises = exercises);
+      .subscribe(() => this.exercises = this.exerciseService.getCurrentExercises());
   }
 
   ngOnDestroy() {

@@ -3,7 +3,7 @@
     <h3 class="text-info mb-0">Wokout results</h3>
     <button 
       *ngIf="workout && workout.status.completed"
-      class="btn btn-primary"
+      class="btn btn-primary btn-sm"
       [routerLink]="[ '/workout', 'train', workout.id ]"
     >Try again</button>
   </div>

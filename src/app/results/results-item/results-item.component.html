@@ -7,13 +7,25 @@
   routerLinkActive="active"
 >
   <div class="results-item__dates d-flex justify-content-between">
-    <span>Added {{ dateMessage(workout.createdAt) }}</span>
-    <span>{{ workout.status.completed ? 'Completed ' + dateMessage(workout.completedAt)
-      : 'Not completed yet' }}</span>
+    <span>Added {{ workout.createdAt | datediff }}</span>
+    <span>
+      {{ workout.status.completed 
+        ? 'Completed ' + (workout.completedAt | datediff)
+        : 'Not completed yet' }}
+    </span>
   </div>
   <hr class="mt-2 mb-2">
   <div class="d-flex justify-content-between">
     <span>{{ workout.muscleGroup.trim() || 'No muscle group provided' }}</span>
-    <span>{{ workout.exercisesIdList.length }} exercises - {{ workout.rounds }} rounds</span>
+    <span>
+      {{ workout.exercisesIdList.length }} 
+      {{ 'exercise' | plural:'exercises':workout.exercisesIdList.length }} - 
+      {{ workout.rounds }} {{ 'round' | plural:'rounds':workout.rounds }}
+    </span>
   </div>
+  <small 
+    *ngIf="workout.status.completed"
+    class="results-item__time"
+  >{{ 'Workout time: ' + (workout.workoutTime | timer) }}
+  </small>
 </div>

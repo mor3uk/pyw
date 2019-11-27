@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Workout } from '../../shared/models/workout.model';
-import { generateDateMessage } from '../../shared/utils/date-message.util';
 
 @Component({
   selector: 'app-results-item',
@@ -14,9 +13,5 @@ export class ResultsItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { }
-
-  dateMessage(timestamp: number) {
-    return generateDateMessage(timestamp);
-  }
 
 }

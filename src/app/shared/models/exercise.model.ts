@@ -6,9 +6,6 @@ export class Exercise {
   result: { succeeded?: boolean, results: Array<Result[]> } = {
     succeeded: false, results: [[]],
   };
-  resetResults: Function = function () {
-    this.result.results = [];
-  };
 
   constructor(
     public name: string,
@@ -17,4 +14,18 @@ export class Exercise {
     public unitAmount: number,
     public roundAmount: number,
   ) { }
+
+  clone() {
+    const cloneExercise = {
+      ...this,
+      result: {
+        succeeded: this.result.succeeded,
+        results: this.result.results.map((resultArray) =>
+          resultArray.map((result) => ({ ...result })))
+      }
+    };
+    Object.setPrototypeOf(cloneExercise, Object.getPrototypeOf(this));
+
+    return cloneExercise;
+  }
 }

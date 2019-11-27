@@ -7,8 +7,10 @@
   <div class="card-body text-secondary">
     <div class="d-flex align-items-end">
       <p>
-        {{ exercise.roundAmount }} {{ roundWord }} -
-        {{ exercise.unitAmount }} {{ unitWord }}
+        {{ exercise.roundAmount }} 
+        {{ 'round' | plural:'rounds':exercise.roundAmount }} -
+        {{ exercise.unitAmount }} 
+        {{ exercise.unit | plural:exercise.unit + 's':exercise.unitAmount }}
       </p>
     </div>
     <div class="d-flex justify-content-between align-items-center">

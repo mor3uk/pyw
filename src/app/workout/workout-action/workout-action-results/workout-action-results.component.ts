@@ -12,7 +12,7 @@ export class WorkoutActionResultsComponent implements OnInit {
   exerciseName: string;
   workoutRound: number;
   exerciseUnits: number;
-  unitWord: string;
+  unit: string;
 
   constructor() {
   }
@@ -21,14 +21,7 @@ export class WorkoutActionResultsComponent implements OnInit {
     this.exerciseName = this.exerciseRoundsInfo[0].exerciseName;
     this.workoutRound = this.exerciseRoundsInfo[0].workoutRound;
     this.exerciseUnits = this.exerciseRoundsInfo[0].exerciseUnits;
-    this.unitWord = this.exerciseRoundsInfo[0].exerciseUnit[0].toUpperCase()
-      + this.exerciseRoundsInfo[0].exerciseUnit.substring(1) + 's';
-  }
-
-  secondsToTimer(seconds: number) {
-    const date = new Date(null);
-    date.setSeconds(seconds);
-    return date.toISOString().substr(14, 5);
+    this.unit = this.exerciseRoundsInfo[0].exerciseUnit;
   }
 
 }

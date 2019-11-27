@@ -3,7 +3,7 @@
   <thead>
     <tr class="table-info">
       <td>Round</td>
-      <td>{{ unitWord }}</td>
+      <td>{{ unit + 's' | titlecase }}</td>
       <td>Time</td>
     </tr>
   </thead>
@@ -16,7 +16,7 @@
       >
       <td>{{ exerciseRoundInfo.exerciseRound }}</td>
       <td>{{ exerciseRoundInfo.actualUnits }} / {{ exerciseUnits }}</td>
-      <td>{{ secondsToTimer(exerciseRoundInfo.exerciseTime) }}</td>
+      <td>{{ exerciseRoundInfo.exerciseTime | timer }}</td>
     </tr>
   </tbody>
 </table>

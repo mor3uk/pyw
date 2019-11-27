@@ -8,7 +8,7 @@ export class Workout {
   id: string = uuid();
   status: { completed: boolean, succeeded: boolean } = {
     completed: false, succeeded: false,
-  }
+  };
 
   constructor(
     public muscleGroup: string = '',
