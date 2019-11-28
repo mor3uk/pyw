@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Workout } from '../../shared/models/workout.model';
-import { ExerciseRoundsInfo } from '../../shared/models/exercise-rounds-info.model';
-import { ExerciseService } from '../../shared/services/exercise.service';
 import { WorkoutService } from '../../shared/services/workout.service';
+import { ResultsService } from 'src/app/shared/services/results.service';
+import { Result } from 'src/app/shared/models/result.model';
 
 @Component({
   selector: 'app-results-info',
@@ -12,53 +12,27 @@ import { WorkoutService } from '../../shared/services/workout.service';
   styleUrls: ['./results-info.component.scss']
 })
 export class ResultsInfoComponent implements OnInit {
-  workoutRoundsInfo: Array<ExerciseRoundsInfo>[] = [];
+  exerciseRoundsGroups: any[] = [];
   workout: Workout;
   id: string;
 
   constructor(
-    private exerciseService: ExerciseService,
     private workoutService: WorkoutService,
     private route: ActivatedRoute,
     private router: Router,
+    private resultsService: ResultsService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(({ id } = {}) => {
-      if (!id) {
-        return;
-      }
-      this.id = id;
       this.workout = this.workoutService.getWorkout(id);
-      this.workoutRoundsInfo = [];
-
-      if (!this.workout.status.completed) {
-        return;
+      this.id = id;
+      if (!id) {
+        return this.exerciseRoundsGroups = [];
       }
-
-      for (let i = 0; i < this.workout.rounds; i++) {
-        this.workout.exercisesIdList.forEach((exerciseId) => {
-          let exerciseRoundsInfos: Array<ExerciseRoundsInfo> = [];
-          let exercise = this.exerciseService.getExerciseById(exerciseId);
-
-          for (let j = 0; j < exercise.roundAmount; j++) {
-            exerciseRoundsInfos.push({
-              exerciseName: exercise.name,
-              workoutRound: i + 1,
-              exerciseRound: j + 1,
-              exerciseUnits: exercise.unitAmount,
-              actualUnits: exercise.result.results[i][j].units,
-              exerciseTime: exercise.result.results[i][j].time,
-              exerciseUnit: exercise.unit,
-            });
-          }
-
-          this.workoutRoundsInfo.push(
-            exerciseRoundsInfos.map((item) => ({ ...item }))
-          );
-        });
-      }
-    })
+      const result = this.resultsService.getResult(id);
+      this.exerciseRoundsGroups = result.exerciseRoundsGroups;
+    });
   }
 
   onRemoveWorkout() {

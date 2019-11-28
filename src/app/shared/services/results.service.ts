@@ -10,10 +10,23 @@ import { WorkoutState } from 'src/app/workout/workout-train/workout-state.model'
 export class ResultsService {
   exerciseRoundAdded = new Subject<any[]>();
   exerciseRoundReseted = new Subject();
-  results: Result[] = [];
+  results: Result[];
   currentResult: Result;
   groupI: number;
   roundCheck: number;
+
+  constructor() {
+    try {
+      const resultsJSON = localStorage.getItem('results');
+      if (resultsJSON) {
+        this.results = JSON.parse(resultsJSON);
+      } else {
+        this.results = [];
+      }
+    } catch (e) {
+      this.results = [];
+    }
+  }
 
   initializeResult(id: string) {
     this.currentResult = { workoutId: id, exerciseRoundsGroups: [[null]] };
@@ -44,9 +57,21 @@ export class ResultsService {
     const i = this.results.findIndex((result) =>
       result.workoutId === this.currentResult.workoutId);
     if (i === -1) {
-      return this.results.push(this.currentResult);
+      this.results.push(this.currentResult);
+    } else {
+      this.results[i] = this.currentResult;
     }
-    this.results[i] = this.currentResult;
+
+    localStorage.setItem('results', JSON.stringify(this.results));
+  }
+
+  removeResult(id: string) {
+    this.results = this.results.filter((result) => id !== result.workoutId);
+    localStorage.setItem('results', JSON.stringify(this.results));
+  }
+
+  getResult(id: string) {
+    return this.results.find((result) => id === result.workoutId);
   }
 
 }

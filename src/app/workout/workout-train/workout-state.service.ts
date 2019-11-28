@@ -9,9 +9,11 @@ import { WorkoutService } from 'src/app/shared/services/workout.service';
 export class WorkoutStateService {
   workoutStateReseted = new Subject<WorkoutState>();
   workoutState: WorkoutState;
-  workoutTimer;
+  exerciseTimer;
   defaultWorkoutState: WorkoutState;
   currentExI: number = 0;
+  workoutTimer;
+  workoutDuration: number = 0;
 
   constructor(
     private resultsService: ResultsService,
@@ -25,6 +27,7 @@ export class WorkoutStateService {
   setDefaultWorkoutState(workoutState: WorkoutState) {
     this.workoutState = workoutState;
     this.defaultWorkoutState = { ...workoutState };
+    this.workoutDuration = 0;
     this.resultsService.initializeResult(workoutState.id);
   }
 
@@ -33,17 +36,17 @@ export class WorkoutStateService {
     this.currentExI = 0;
     this.workoutStateReseted.next(this.workoutState);
     this.resultsService.initializeResult(this.workoutState.id);
-    clearInterval(this.workoutTimer);
+    clearInterval(this.exerciseTimer);
   }
 
   pauseTimer() {
-    clearInterval(this.workoutTimer);
+    clearInterval(this.exerciseTimer);
   }
 
   runTimer() {
-    clearInterval(this.workoutTimer);
+    clearInterval(this.exerciseTimer);
     this.workoutState.workoutTimerValue = 0;
-    this.workoutTimer = setInterval(() =>
+    this.exerciseTimer = setInterval(() =>
       this.workoutState.workoutTimerValue++, 1000);
   }
 
@@ -69,6 +72,7 @@ export class WorkoutStateService {
     const workout = this.workoutService.getWorkout(this.workoutState.id);
 
     if (this.workoutState.workoutFinishedRounds === workout.roundsNumber) {
+      clearInterval(this.workoutTimer);
       return this.workoutState.workoutFinished = true;
     }
   }
@@ -92,12 +96,21 @@ export class WorkoutStateService {
       >= this.workoutState.currentExercise.unitNumber;
   }
 
+  startRound() {
+    if (this.currentExI === 0
+      && this.workoutState.workoutFinishedRounds === 0) {
+      this.workoutTimer = setInterval(() => this.workoutDuration++, 1000);
+    }
+    this.runTimer();
+  }
+
   save() {
     if (this.workoutState.workoutFinished) {
       this.resultsService.saveResult();
       this.workoutService.setWorkoutCompleted(
         this.workoutState.id,
-        this.workoutState.isSuccess
+        this.workoutState.isSuccess,
+        this.workoutDuration
       );
     }
   }

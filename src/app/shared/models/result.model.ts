@@ -1,6 +1,5 @@
 export interface Result {
   workoutId: string,
-  duration?: number,
   exerciseRoundsGroups?: [
     [
       {

@@ -5,6 +5,7 @@ export interface Workout {
   muscleGroup: string,
   roundsNumber: number,
   exercisesIdList: string[],
+  duration?: number,
   status: {
     completed: boolean,
     succeeded: boolean,

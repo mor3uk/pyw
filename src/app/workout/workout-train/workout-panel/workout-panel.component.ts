@@ -20,7 +20,8 @@ export class WorkoutPanelComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private workoutService: WorkoutService,
-    private workoutStateService: WorkoutStateService
+    private workoutStateService: WorkoutStateService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -53,7 +54,7 @@ export class WorkoutPanelComponent implements OnInit {
       return;
     }
     this.isRound = true;
-    this.workoutStateService.runTimer();
+    this.workoutStateService.startRound();
   }
 
   onFinishRound() {
@@ -75,6 +76,7 @@ export class WorkoutPanelComponent implements OnInit {
 
   onSaveResult() {
     this.workoutStateService.save();
+    this.router.navigate(['results']);
   }
 
   onTryAgain() {

@@ -7,6 +7,7 @@ import { Workout } from '../models/workout.model';
 import { ExerciseService } from './exercise.service';
 import { Exercise } from '../models/exercise.model';
 import { Filters } from '../models/filters.model';
+import { ResultsService } from './results.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,10 @@ export class WorkoutService {
   workoutFiltersChanged = new Subject<Filters>();
   workoutWasRemoved = new Subject();
 
-  constructor(private exerciseService: ExerciseService) {
+  constructor(
+    private exerciseService: ExerciseService,
+    private resultsService: ResultsService,
+  ) {
     try {
       const workoutsJSON = localStorage.getItem('workouts');
       if (workoutsJSON) {
@@ -82,9 +86,10 @@ export class WorkoutService {
       switch (filters.sortBy) {
         case 'date-creation':
           return a.createdAt - b.createdAt;
-        case 'time-completion':
         case 'date-completion':
           return a.completedAt - b.completedAt;
+        case 'time-completion':
+          return b.duration - a.duration;
       }
       return 1;
     })
@@ -99,9 +104,8 @@ export class WorkoutService {
       this.getWorkout(id).exercisesIdList
     );
     this.workouts = this.workouts.filter((workout) => workout.id !== id);
+    this.resultsService.removeResult(id);
     this.workoutWasRemoved.next();
-
-    // add remove results, too
 
     localStorage.setItem('workouts', JSON.stringify(this.workouts));
   }
@@ -112,11 +116,12 @@ export class WorkoutService {
         .exercisesIdList.includes(exercise.id));
   }
 
-  setWorkoutCompleted(id: string, succeeded: boolean) {
+  setWorkoutCompleted(id: string, succeeded: boolean, duration: number) {
     this.workouts.forEach((workout, i) => {
       if (workout.id === id) {
         this.workouts[i].status = { completed: true, succeeded };
         this.workouts[i].completedAt = +moment();
+        this.workouts[i].duration = duration;
       }
     })
 

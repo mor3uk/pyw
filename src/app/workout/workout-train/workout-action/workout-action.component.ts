@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { WorkoutStateService } from '../workout-state.service';
-import { Result } from 'src/app/shared/models/result.model';
 import { ResultsService } from 'src/app/shared/services/results.service';
 
 @Component({
@@ -12,7 +11,7 @@ import { ResultsService } from 'src/app/shared/services/results.service';
   providers: [WorkoutStateService],
 })
 export class WorkoutActionComponent implements OnInit, OnDestroy {
-  exerciseRoundsGroups: Result[] = [];
+  exerciseRoundsGroups: any[] = [];
   exerciseRoundAddedSubscription: Subscription;
   exerciseRoundResetedSubscription: Subscription;
 
