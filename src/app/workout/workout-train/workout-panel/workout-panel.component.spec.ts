@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WorkoutActionPanelComponent } from './workout-action-panel.component';
+import { WorkoutPanelComponent } from './workout-panel.component';
 
-describe('WorkoutActionPanelComponent', () => {
-  let component: WorkoutActionPanelComponent;
-  let fixture: ComponentFixture<WorkoutActionPanelComponent>;
+describe('WorkoutPanelComponent', () => {
+  let component: WorkoutPanelComponent;
+  let fixture: ComponentFixture<WorkoutPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorkoutActionPanelComponent ]
+      declarations: [ WorkoutPanelComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorkoutActionPanelComponent);
+    fixture = TestBed.createComponent(WorkoutPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -26,24 +26,29 @@
       placeholder="A little about the exercise"
       trim="blur"
     ></textarea>
+    <small 
+      *ngIf="exerciseForm.controls.note.errors && exerciseForm.controls.note.touched" 
+      class="error-message"
+    >Too many characters
+    </small>
   </div>
   <div class="row">
     <div class="form-group col-md-3">
-      <label class="text-secondary" for="roundAmount">Rounds</label>
+      <label class="text-secondary" for="roundsNumber">Rounds</label>
       <input 
         type="number" 
         class="form-control" 
-        id="roundAmount" 
-        formControlName="roundAmount" 
+        id="roundsNumber" 
+        formControlName="roundsNumber" 
         min="1"
         max="5"
       >
     </div>
     <div class="form-group col-md-6 p-0">
-      <label class="text-secondary" for="unit">Type</label>
+      <label class="text-secondary" for="unitType">Type</label>
       <select 
-        id="unit" 
-        formControlName="unit" 
+        id="unitType" 
+        formControlName="unitType" 
         class="form-control" 
       >
         <option value="repetition">By repetitions</option>
@@ -51,14 +56,14 @@
       </select>
     </div>
     <div class="form-group col-md-3">
-      <label class="text-secondary" for="unitAmount">
-        {{ exerciseForm.value.unit === 'repetition' ? 'Reps' : 'Time' }}
+      <label class="text-secondary" for="unitNumber">
+        {{ exerciseForm.value.unitType === 'repetition' ? 'Reps' : 'Time' }}
       </label>
       <input 
         type="number" 
         class="form-control" 
-        id="unitAmount" 
-        formControlName="unitAmount" 
+        id="unitNumber" 
+        formControlName="unitNumber" 
         min="1"
         max="200"
       >

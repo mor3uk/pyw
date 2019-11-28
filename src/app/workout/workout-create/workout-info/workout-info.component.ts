@@ -10,7 +10,7 @@ import { ExerciseService } from '../../../shared/services/exercise.service';
   styleUrls: ['./workout-info.component.scss']
 })
 export class WorkoutInfoComponent implements OnInit, OnDestroy {
-  exercises: Array<Exercise> = [];
+  exercises: Exercise[] = [];
   exerciseSubscription: Subscription;
 
   constructor(private exerciseService: ExerciseService) { }

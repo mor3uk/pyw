@@ -1,14 +1,17 @@
 <div class="row workout-action-row">
   <div class="workout-action-panel">
-    <app-workout-action-panel></app-workout-action-panel>
+    <app-workout-panel></app-workout-panel>
   </div>
   <div class="workout-action-results">
     <h3 class="text-info">Actual results</h3>
     <app-workout-results
-      *ngFor="let exerciseRoundsInfo of workoutRoundsInfo"
-      [exerciseRoundsInfo]="exerciseRoundsInfo"
+      *ngFor="let exerciseRoundsGroup of exerciseRoundsGroups"
+      [exerciseRoundsGroup]="exerciseRoundsGroup"
     ></app-workout-results>
-    <div *ngIf="workoutRoundsInfo.length === 0" class="alert alert-info not-found-alert no-exercises-alert mt-3">
+    <div 
+      *ngIf="exerciseRoundsGroups.length === 0"
+      class="alert alert-info not-found-alert no-exercises-alert mt-3"
+    >
       <h5>No completed exercises yet</h5>
     </div>
   </div>

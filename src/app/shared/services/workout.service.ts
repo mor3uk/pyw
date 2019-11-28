@@ -1,18 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs';
 import moment from 'moment';
+import uuid from 'uuid';
 
 import { Workout } from '../models/workout.model';
 import { ExerciseService } from './exercise.service';
 import { Exercise } from '../models/exercise.model';
-import { WorkoutFilters } from '../models/workout-filters.model';
+import { Filters } from '../models/filters.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkoutService {
-  workouts: Array<Workout> = [];
-  workoutFiltersChanged = new Subject<WorkoutFilters>();
+  workouts: Workout[] = [];
+  workoutFiltersChanged = new Subject<Filters>();
   workoutWasRemoved = new Subject();
 
   constructor(private exerciseService: ExerciseService) {
@@ -28,10 +29,20 @@ export class WorkoutService {
     }
   }
 
-  addWorkout(muscleGroup: string, rounds: number) {
-    const listIds: string[] = this.exerciseService
+  addWorkout(muscleGroup: string, roundsNumber: number) {
+    const exercisesIdList: string[] = this.exerciseService
       .currentExercises.map((exercise) => exercise.id);
-    const workout = new Workout(muscleGroup, rounds, listIds);
+    const workout = {
+      id: uuid(),
+      muscleGroup: muscleGroup || '',
+      createdAt: +moment(),
+      roundsNumber,
+      exercisesIdList,
+      status: {
+        completed: false,
+        succeeded: false,
+      }
+    }
     this.workouts.push(workout);
 
     this.exerciseService.saveExercises();
@@ -40,7 +51,7 @@ export class WorkoutService {
     localStorage.setItem('workouts', JSON.stringify(this.workouts));
   }
 
-  getWorkouts(): Array<Workout> {
+  getWorkouts(): Workout[] {
     return this.workouts;
   }
 
@@ -48,7 +59,7 @@ export class WorkoutService {
     return this.workouts.find((workout) => id === workout.id);
   }
 
-  getFilteredWorkouts(filters: WorkoutFilters = {}) {
+  getFilteredWorkouts(filters: Filters = {}) {
     return this.workouts.filter((workout) => {
       let muscleGroupMatch = true;
       let statusMatch = true;
@@ -71,10 +82,9 @@ export class WorkoutService {
       switch (filters.sortBy) {
         case 'date-creation':
           return a.createdAt - b.createdAt;
+        case 'time-completion':
         case 'date-completion':
           return a.completedAt - b.completedAt;
-        case 'time-completion':
-          return a.workoutTime - b.workoutTime;
       }
       return 1;
     })
@@ -91,24 +101,24 @@ export class WorkoutService {
     this.workouts = this.workouts.filter((workout) => workout.id !== id);
     this.workoutWasRemoved.next();
 
+    // add remove results, too
+
     localStorage.setItem('workouts', JSON.stringify(this.workouts));
   }
 
-  getOwnExercises(id: string): Array<Exercise> {
+  getOwnExercises(id: string): Exercise[] {
     return this.exerciseService.getExercises()
       .filter((exercise) => this.getWorkout(id)
         .exercisesIdList.includes(exercise.id));
   }
 
-  setWorkoutCompleted(id: string, succeeded: boolean, workoutTime: number) {
-    this.workouts = this.workouts.map((workout) => {
-      if (id === workout.id) {
-        workout.status = { completed: true, succeeded };
-        workout.completedAt = +moment();
-        workout.workoutTime = workoutTime;
+  setWorkoutCompleted(id: string, succeeded: boolean) {
+    this.workouts.forEach((workout, i) => {
+      if (workout.id === id) {
+        this.workouts[i].status = { completed: true, succeeded };
+        this.workouts[i].completedAt = +moment();
       }
-      return workout;
-    });
+    })
 
     localStorage.setItem('workouts', JSON.stringify(this.workouts));
   }

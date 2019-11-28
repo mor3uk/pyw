@@ -8,18 +8,14 @@ import { Exercise } from '../models/exercise.model';
 })
 export class ExerciseService {
   exercisesChanged = new Subject();
-  exercises: Array<Exercise> = [];
-  currentExercises: Array<Exercise> = [];
+  exercises: Exercise[] = [];
+  currentExercises: Exercise[] = [];
 
   constructor() {
     try {
       const exercisesJSON = localStorage.getItem('exercises');
       if (exercisesJSON) {
-        const emptyExercises = JSON.parse(exercisesJSON);
-        this.exercises = emptyExercises.map((exercise) => {
-          Object.setPrototypeOf(exercise, Exercise.prototype);
-          return exercise;
-        })
+        this.exercises = JSON.parse(exercisesJSON);
       } else {
         this.exercises = [];
       }
@@ -34,9 +30,7 @@ export class ExerciseService {
   }
 
   getExercises(): Array<Exercise> {
-    return this.exercises.map((exercise) => {
-      return exercise.clone();
-    });
+    return this.exercises.map((exercise) => ({ ...exercise }));
   }
 
   getCurrentExercises(): Array<Exercise> {
@@ -52,13 +46,16 @@ export class ExerciseService {
   }
 
   editCurrentExercise(id: string, changes: object) {
-    this.currentExercises = this.currentExercises.map((exercise) => {
-      return exercise.id === id ? Object.assign(exercise, changes) : exercise;
+    this.currentExercises.forEach((exercise, i) => {
+      if (exercise.id === id) {
+        this.currentExercises[i] = { ...exercise, ...changes };
+      }
     });
+
     this.exercisesChanged.next();
   }
 
-  rewriteExercises(exercisesToRewrite: Array<Exercise>) {
+  rewriteExercises(exercisesToRewrite: Exercise[]) {
     this.exercises = this.exercises.map((exercise) => {
       const exerciseToRewrite = exercisesToRewrite
         .find((exerciseToRewrite) => exerciseToRewrite.id === exercise.id);
@@ -76,7 +73,7 @@ export class ExerciseService {
   saveExercises() {
     this.exercises = [
       ...this.exercises,
-      ...this.currentExercises.map((exercise) => exercise.clone())
+      ...this.currentExercises.map((exercise) => ({ ...exercise }))
     ];
     this.emptyCurrentExercises();
 
@@ -94,6 +91,7 @@ export class ExerciseService {
   removeCurrentExercise(id: string) {
     this.currentExercises = this.currentExercises
       .filter((exercise) => id !== exercise.id);
+
     this.exercisesChanged.next();
   }
 }

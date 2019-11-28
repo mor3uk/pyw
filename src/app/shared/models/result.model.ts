@@ -1,7 +1,15 @@
-export class Result {
-  constructor(
-    public round: number,
-    public units: number,
-    public time: number,
-  ) { }
+export interface Result {
+  workoutId: string,
+  duration?: number,
+  exerciseRoundsGroups?: [
+    [
+      {
+        exerciseId: string,
+        exerciseRound: number,
+        exerciseDuration: number,
+        workoutRound: number,
+        actualUnitNumber: number,
+      }
+    ] 
+  ]
 }

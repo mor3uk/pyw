@@ -3,20 +3,20 @@
   <thead>
     <tr class="table-info">
       <td>Round</td>
-      <td>{{ unit + 's' | titlecase }}</td>
+      <td>{{ unitType + 's' | titlecase }}</td>
       <td>Time</td>
     </tr>
   </thead>
   <tbody>
     <tr 
-      *ngFor="let exerciseRoundInfo of exerciseRoundsInfo" 
-      [ngClass]="{'table-success': exerciseUnits < exerciseRoundInfo.actualUnits,
-        'table-danger': exerciseUnits > exerciseRoundInfo.actualUnits,
-        'table-warning': exerciseUnits === exerciseRoundInfo.actualUnits }"
+      *ngFor="let exerciseRound of exerciseRoundsGroup" 
+      [ngClass]="{'table-success': unitNumber < exerciseRound.actualUnitNumber,
+        'table-danger': unitNumber > exerciseRound.actualUnitNumber,
+        'table-warning': unitNumber === exerciseRound.actualUnitNumber }"
       >
-      <td>{{ exerciseRoundInfo.exerciseRound }}</td>
-      <td>{{ exerciseRoundInfo.actualUnits }} / {{ exerciseUnits }}</td>
-      <td>{{ exerciseRoundInfo.exerciseTime | timer }}</td>
+      <td>{{ exerciseRound.exerciseRound }}</td>
+      <td>{{ exerciseRound.actualUnitNumber }} / {{ unitNumber }}</td>
+      <td>{{ exerciseRound.exerciseDuration | timer }}</td>
     </tr>
   </tbody>
 </table>

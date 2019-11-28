@@ -1,26 +1,27 @@
 <h3 class="text-success">
-  {{ workout.muscleGroup.trim() ? 'Muscle group: ' + workout.muscleGroup.trim()
+  {{ workout.muscleGroup ? 'Muscle group: ' + workout.muscleGroup
     : 'No muscle group specified...' }}
 </h3>
 <div class="card mt-3">
   <div class="card-body">
     <h4 class="crad-title mb-3 text-success">
-      Start exercising <u>{{ currentExercise.name.toLowerCase() }}</u>
+      Start exercising <u>{{ workoutState.currentExercise.name }}</u>
     </h4>
     <div class="card-text text-center alert alert-success">
-      {{ currentExercise.note.trim() || 'No note provided...' }}
+      {{ workoutState.currentExercise.note || 'No note provided...' }}
       <hr class="m-2">
-      Your goal - {{ currentExercise.unitAmount }} 
-      {{ currentExercise.unit | plural:currentExercise.unit + 's':currentExercise.unitAmount }} 
-      at each round!
+      Your goal - {{ workoutState.currentExercise.unitNumber }} 
+      {{ workoutState.currentExercise.unitType 
+        | plural:workoutState.currentExercise.unitType 
+        + 's':workoutState.currentExercise.unitNumber }} at each round!
     </div>
     <div class="row align-items-center text-success text-center">
       <div class="col">
         <button 
           class="btn btn-block btn btn-success"
           *ngIf="!isRound"
+          [disabled]="roundJustFinished || workoutState.workoutFinished"
           (click)="onStartRound()"
-          [disabled]="!readyToStart()"
         >Start</button>
         <button 
           class="btn btn-block btn btn-info"
@@ -29,22 +30,26 @@
         >Done</button>
       </div>
       <div class="col">
-        Rounds: {{ finishedRounds }} / {{ currentExercise.roundAmount }}
+        Rounds: {{ workoutState.exerciseFinishedRounds }} 
+        / {{ workoutState.currentExercise.roundsNumber }}
       </div>
       <div class="col">
-        Time: {{ currentTime | timer }}
+        Time: {{ workoutState.workoutTimerValue | timer }}
       </div>
     </div>
-    <div *ngIf="roundJustFinished" class="row justify-content-center text-center align-items-center mt-3">
+    <div 
+      *ngIf="roundJustFinished" 
+      class="row justify-content-center text-center align-items-center mt-3"
+    >
       <div class="col-4">
         <label for="units" class="mb-0 text-secondary">
-          {{ currentExercise.unit + 's' | titlecase }}
+          {{ workoutState.currentExercise.unitType + 's' | titlecase }}
         </label>
       </div>
       <div class="col-3">
         <input 
           id="units" 
-          [(ngModel)]="currentUnits" 
+          [(ngModel)]="workoutState.currentUnitNumber" 
           class="form-control" 
           type="number"
           min="1"
@@ -55,30 +60,37 @@
         <button 
           class="btn btn-info btn-block"
           (click)="onRest()"
-          [ngClass]="{'btn-danger': finishedRounds === currentExercise.roundAmount}"
+          [ngClass]="{ 'btn-danger': 
+            workoutState.exerciseFinishedRounds === workoutState.currentExercise.roundsNumber }"
           [disabled]="!enableRest()"
-        >{{ finishedRounds === currentExercise.roundAmount ? 'Finish' : 'Rest' }}</button>
+        >{{ workoutState.exerciseFinishedRounds === workoutState.currentExercise.roundsNumber 
+          ? 'Finish' : 'Rest' }}
+        </button>
       </div>
     </div>
-    <div *ngIf="!workoutFinished" class="alert alert-warning mt-3">
+    <div *ngIf="!workoutState.workoutFinished" class="alert alert-warning mt-3">
       Notice: training can not be paused for resting time is provided!
     </div>
     <div 
-      *ngIf="workoutFinished" 
+      *ngIf="workoutState.workoutFinished" 
       class="alert mt-3 text-center"
-      [ngClass]="{'alert-success': isSuccess, 'alert-danger': !isSuccess}"
-    >Workout is done, you {{ isSuccess ? 'succeeded' : 'failed' }}!
+      [ngClass]="{'alert-success': workoutState.isSuccess, 
+        'alert-danger': !workoutState.isSuccess}"
+    >Workout is done, you {{ workoutState.isSuccess ? 'succeeded' : 'failed' }}!
     </div>
     <div class="row mt-3">
       <div class="col">
-        <button class="btn btn-block btn-success" [disabled]="!workoutFinished"
-          (click)="onSaveExercisesResults()">Save</button>
+        <button 
+          class="btn btn-block btn-success" 
+          [disabled]="!workoutState.workoutFinished"
+          (click)="onSaveResult()"
+        >Save</button>
       </div>
       <div class="col">
         <button 
           class="btn btn-block text-white btn-warning" 
           title="Results are to be lost" 
-          (click)="setDefaultState()"
+          (click)="onTryAgain()"
         >Try again</button>
       </div>
       <div class="col">
@@ -92,6 +104,6 @@
   </div>
   <hr class="m-0">
   <div class="card-header text-muted text-right">
-    Workout round passed: {{ finishedWorkoutRounds }} / {{ workout.rounds }}
+    Workout round passed: {{ workoutState.workoutFinishedRounds }} / {{ workout.roundsNumber }}
   </div>
 </div>

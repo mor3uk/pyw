@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import uuid from 'uuid';
 
-import { Exercise } from '../../../shared/models/exercise.model';
 import { ExerciseService } from '../../../shared/services/exercise.service';
 
 @Component({
@@ -28,17 +28,17 @@ export class ExerciseFormComponent implements OnInit {
         Validators.maxLength(25)
       ]),
       'note': new FormControl('', Validators.maxLength(80)),
-      'roundAmount': new FormControl(1, [
+      'roundsNumber': new FormControl(1, [
         Validators.required,
         Validators.min(1),
         Validators.max(5),
         Validators.pattern(/^\d*$/),
       ]),
-      'unit': new FormControl('repetition', [
+      'unitType': new FormControl('repetition', [
         Validators.required,
         Validators.pattern(/^repetition|second$/)]
       ),
-      'unitAmount': new FormControl(1, [
+      'unitNumber': new FormControl(1, [
         Validators.required,
         Validators.min(1),
         Validators.max(200),
@@ -54,9 +54,9 @@ export class ExerciseFormComponent implements OnInit {
         this.exerciseForm.setValue({
           'name': exercise.name,
           'note': exercise.note && exercise.note.trim(),
-          'roundAmount': exercise.roundAmount,
-          'unit': exercise.unit,
-          'unitAmount': exercise.unitAmount,
+          'roundsNumber': exercise.roundsNumber,
+          'unitType': exercise.unitType,
+          'unitNumber': exercise.unitNumber,
         });
       }
     });
@@ -69,19 +69,20 @@ export class ExerciseFormComponent implements OnInit {
   }
 
   addExercise() {
-    this.exerciseService.addExercise(new Exercise(
-      this.exerciseForm.value.name,
-      this.exerciseForm.value.note,
-      this.exerciseForm.value.unit,
-      this.exerciseForm.value.unitAmount,
-      this.exerciseForm.value.roundAmount,
-    ));
+    this.exerciseService.addExercise({
+      id: uuid(),
+      name: this.exerciseForm.value.name,
+      note: this.exerciseForm.value.note,
+      unitType: this.exerciseForm.value.unitType,
+      unitNumber: this.exerciseForm.value.unitNumber,
+      roundsNumber: this.exerciseForm.value.roundsNumber,
+    });
     this.exerciseForm.reset({
       'name': '',
       'note': '',
-      'roundAmount': 1,
-      'unit': 'repetition',
-      'unitAmount': 1,
+      'roundsNumber': 1,
+      'unitType': 'repetition',
+      'unitNumber': 1,
     });
   }
 

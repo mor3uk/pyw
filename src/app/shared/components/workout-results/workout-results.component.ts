@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ExerciseRoundsInfo } from '../../models/exercise-rounds-info.model';
+import { ExerciseService } from '../../services/exercise.service';
 
 @Component({
   selector: 'app-workout-results',
@@ -8,20 +8,22 @@ import { ExerciseRoundsInfo } from '../../models/exercise-rounds-info.model';
   styleUrls: ['./workout-results.component.scss']
 })
 export class WorkoutResultsComponent implements OnInit {
-  @Input() exerciseRoundsInfo: Array<ExerciseRoundsInfo> = [];
+  @Input() exerciseRoundsGroup: any[] = [];
   exerciseName: string;
   workoutRound: number;
-  exerciseUnits: number;
-  unit: string;
+  unitNumber: number;
+  unitType: string;
 
-  constructor() {
+  constructor(private exerciseService: ExerciseService) {
   }
 
   ngOnInit() {
-    this.exerciseName = this.exerciseRoundsInfo[0].exerciseName;
-    this.workoutRound = this.exerciseRoundsInfo[0].workoutRound;
-    this.exerciseUnits = this.exerciseRoundsInfo[0].exerciseUnits;
-    this.unit = this.exerciseRoundsInfo[0].exerciseUnit;
+    const id = this.exerciseRoundsGroup[0].exerciseId;
+    const exercise = this.exerciseService.getExerciseById(id);
+    this.exerciseName = exercise.name;
+    this.unitNumber = exercise.unitNumber;
+    this.unitType = exercise.unitType;
+    this.workoutRound = this.exerciseRoundsGroup[0].workoutRound;
   }
 
 }

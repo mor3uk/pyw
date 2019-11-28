@@ -1,4 +1,4 @@
-export interface WorkoutFilters {
+export interface Filters {
   muscleGroup?: string,
   status?: boolean,
   succeeded?: boolean,

@@ -11,7 +11,7 @@ import { WorkoutService } from 'src/app/shared/services/workout.service';
 export class WorkoutFormComponent implements OnInit {
   @Input() exercisesNumber: number;
   muscleGroup: string;
-  rounds: number;
+  roundsNumber: number;
 
   constructor(
     private workoutService: WorkoutService,
@@ -22,12 +22,14 @@ export class WorkoutFormComponent implements OnInit {
   }
 
   isDisabled() {
-    return this.rounds == null || this.rounds < 1 || !this.exercisesNumber;
+    return this.roundsNumber == null 
+      || this.roundsNumber < 1 
+      || !this.exercisesNumber;
   }
 
   onSaveWorkout() {
     if (!this.isDisabled()) {
-      this.workoutService.addWorkout(this.muscleGroup, this.rounds);
+      this.workoutService.addWorkout(this.muscleGroup, this.roundsNumber);
 
       const lastWorkout = this.workoutService.getLastWorkout();
       this.router.navigate(['/workout', 'train', lastWorkout.id]);

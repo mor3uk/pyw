@@ -9,7 +9,7 @@ import { ExerciseItemComponent } from './workout-create/exercise-item/exercise-i
 import { WorkoutFormComponent } from './workout-create/workout-form/workout-form.component';
 import { WorkoutInfoComponent } from './workout-create/workout-info/workout-info.component';
 import { WorkoutActionComponent } from './workout-train/workout-action/workout-action.component';
-import { WorkoutActionPanelComponent } from './workout-train/workout-action-panel/workout-action-panel.component';
+import { WorkoutPanelComponent } from './workout-train/workout-panel/workout-panel.component';
 import { WorkoutComponent } from './workout.component';
 import { WorkoutResultsModule } from '../shared/modules/workout-results.module';
 
@@ -21,7 +21,7 @@ import { WorkoutResultsModule } from '../shared/modules/workout-results.module';
     WorkoutFormComponent,
     WorkoutInfoComponent,
     WorkoutActionComponent,
-    WorkoutActionPanelComponent,
+    WorkoutPanelComponent,
   ],
   imports: [
     CommonModule,
