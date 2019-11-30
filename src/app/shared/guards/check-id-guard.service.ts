@@ -7,8 +7,8 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { WorkoutService } from './shared/services/workout.service';
-import { ExerciseService } from './shared/services/exercise.service';
+import { WorkoutService } from '../services/workout.service';
+import { ExerciseService } from '../services/exercise.service';
 
 @Injectable({
   providedIn: 'root',

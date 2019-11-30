@@ -1,8 +1,12 @@
-<div class="card mb-4" routerLinkActive="exercise_active">
+<div class="card mb-4">
   <div class="card-header d-flex justify-content-between">
     <h5 class="card-title mb-0 mt-1">{{ exercise.name }}</h5>
-    <button class="btn btn-outline-danger btn-sm" (click)="onRemoveExercise()">
-      Remove</button>
+    <button 
+      class="btn btn-outline-danger btn-sm" 
+      (click)="onRemoveExercise()"
+      [disabled]="editMode"
+    >Remove
+    </button>
   </div>
   <div class="card-body text-secondary">
     <div class="d-flex align-items-end">

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { WorkoutService } from '../../../shared/services/workout.service';
 import { WorkoutStateService } from '../workout-state.service';
@@ -12,6 +12,7 @@ import { WorkoutState } from '../workout-state.model';
   styleUrls: ['./workout-panel.component.scss']
 })
 export class WorkoutPanelComponent implements OnInit {
+  @Output() workoutSaved = new EventEmitter();
   workout: Workout;
   workoutState: WorkoutState;
   isRound: boolean = false;
@@ -76,6 +77,7 @@ export class WorkoutPanelComponent implements OnInit {
 
   onSaveResult() {
     this.workoutStateService.save();
+    this.workoutSaved.emit();
     this.router.navigate(['results']);
   }
 

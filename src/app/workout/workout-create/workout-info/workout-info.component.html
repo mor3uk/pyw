@@ -3,7 +3,10 @@
     <router-outlet></router-outlet>
   </div>
   <div class="workout-info">
-    <app-workout-form [exercisesNumber]="exercises.length"></app-workout-form>
+    <app-workout-form 
+      [exercisesNumber]="exercises.length"
+      (workoutAdded)="workoutAdded = true"
+    ></app-workout-form>
     <div class="exercises-list">
       <div 
         *ngIf="exercises.length === 0" 

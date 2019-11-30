@@ -5,16 +5,18 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import uuid from 'uuid';
 
 import { ExerciseService } from '../../../shared/services/exercise.service';
+import { CanDeactivateComponent } from '../../../shared/guards/can-deactivate-guard.service';
 
 @Component({
   selector: 'app-exercise-form',
   templateUrl: './exercise-form.component.html',
   styleUrls: ['./exercise-form.component.scss']
 })
-export class ExerciseFormComponent implements OnInit {
+export class ExerciseFormComponent implements OnInit, CanDeactivateComponent {
   editMode: boolean = false;
   id: string;
   exerciseForm: FormGroup;
+  stateChanged: boolean = false;
 
   constructor(
     private exerciseService: ExerciseService,
@@ -47,6 +49,8 @@ export class ExerciseFormComponent implements OnInit {
       ]),
     });
 
+    this.exerciseForm.valueChanges.subscribe(() => this.stateChanged = true);
+
     this.route.params.subscribe((params: Params) => {
       if (this.id = params.id) {
         this.editMode = true;
@@ -60,6 +64,9 @@ export class ExerciseFormComponent implements OnInit {
           'unitNumber': exercise.unitNumber,
         });
       }
+
+      this.stateChanged = false;
+      this.exerciseService.exerciseEditModeChanged.next(this.editMode);
     });
   }
 
@@ -89,7 +96,17 @@ export class ExerciseFormComponent implements OnInit {
 
   saveChanges() {
     this.exerciseService.editCurrentExercise(this.id, this.exerciseForm.value);
+    this.editMode = false;
+    this.exerciseService.exerciseEditModeChanged.next(this.editMode);
     this.router.navigate(['workout', 'exercises']);
+  }
+
+  canDeactivate() {
+    if (this.stateChanged && this.editMode) {
+      return confirm('Do you really want to discard the changes?');
+    }
+
+    return true;
   }
 
 }

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { WorkoutStateService } from '../workout-state.service';
 import { ResultsService } from '../../../shared/services/results.service';
+import { CanDeactivateComponent } from '../../../shared/guards/can-deactivate-guard.service';
 
 @Component({
   selector: 'app-workout-action',
@@ -10,10 +11,11 @@ import { ResultsService } from '../../../shared/services/results.service';
   styleUrls: ['./workout-action.component.scss'],
   providers: [WorkoutStateService],
 })
-export class WorkoutActionComponent implements OnInit, OnDestroy {
+export class WorkoutActionComponent implements OnInit, OnDestroy, CanDeactivateComponent {
   exerciseRoundsGroups: any[] = [];
   exerciseRoundAddedSubscription: Subscription;
   exerciseRoundResetedSubscription: Subscription;
+  workoutSaved: boolean = false;
 
   constructor(private resultsService: ResultsService) { }
 
@@ -21,7 +23,7 @@ export class WorkoutActionComponent implements OnInit, OnDestroy {
     this.exerciseRoundAddedSubscription = this.resultsService
       .exerciseRoundAdded.subscribe((exerciseRoundsGroups) =>
         this.exerciseRoundsGroups = exerciseRoundsGroups);
-        
+
     this.exerciseRoundResetedSubscription = this.resultsService
       .exerciseRoundReseted.subscribe(() => this.exerciseRoundsGroups = []);
 
@@ -32,4 +34,11 @@ export class WorkoutActionComponent implements OnInit, OnDestroy {
     this.exerciseRoundResetedSubscription.unsubscribe();
   }
 
+  canDeactivate() {
+    if (!this.workoutSaved) {
+      return confirm('Do you really want to discard the current results?');
+    }
+
+    return true;
+  }
 }

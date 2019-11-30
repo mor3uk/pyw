@@ -14,7 +14,9 @@
     <small 
       *ngIf="exerciseForm.controls.name.errors && exerciseForm.controls.name.touched" 
       class="error-message"
-    >This field is required
+    >{{ exerciseForm.controls.name.errors.required 
+      ? 'This field is required'
+      : 'Too many characters' }}
     </small>
   </div>
   <div class="form-group">

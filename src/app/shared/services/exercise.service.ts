@@ -8,6 +8,7 @@ import { Exercise } from '../models/exercise.model';
 })
 export class ExerciseService {
   exercisesChanged = new Subject();
+  exerciseEditModeChanged = new Subject<boolean>();
   exercises: Exercise[] = [];
   currentExercises: Exercise[] = [];
 
