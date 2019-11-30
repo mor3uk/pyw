@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { ResultsService } from '../../shared/services/results.service';
+import { WorkoutService } from '../../shared/services/workout.service';
 import { WorkoutState } from './workout-state.model';
-import { ResultsService } from 'src/app/shared/services/results.service';
-import { WorkoutService } from 'src/app/shared/services/workout.service';
 
 @Injectable()
 export class WorkoutStateService {

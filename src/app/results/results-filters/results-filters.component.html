@@ -4,13 +4,14 @@
     <div class="col-md-6 pr-1">
       <small class="form-text text-muted">Filter workouts by muscle group</small>
       <input 
-      [(ngModel)]="muscleGroup" 
-      type="text" 
-      class="form-control mt-1 mb-1" 
-      placeholder="Muscle group..."  
-      (input)="onUpdateFilters()"
-      trim="blur"
-    >
+        [(ngModel)]="muscleGroup" 
+        type="text" 
+        class="form-control mt-1 mb-1" 
+        placeholder="Muscle group..."  
+        (input)="onUpdateFilters()"
+        trim="blur"
+        [disabled]="!listLength"
+      >
     </div>
     <div class="col-md-5 pl-1">
       <small class="form-text text-muted">Sort workouts by</small>
@@ -18,6 +19,7 @@
         [(ngModel)]="sortBy" 
         class="form-control mt-1" 
         (change)="onUpdateFilters()"
+        [disabled]="!listLength"
       >
         <option value="0" selected>Creation date</option>
         <option *ngIf="status === 'completed' || succeeded" value="1">Completion date</option>
@@ -31,6 +33,7 @@
           type="checkbox" 
           [(ngModel)]="sortReverse"
           (change)="onUpdateFilters()"
+          [disabled]="!listLength"
         >
       </label>
     </div>
@@ -42,6 +45,7 @@
         [(ngModel)]="status" 
         class="form-control mt-1" 
         (change)="onUpdateFilters()"
+        [disabled]="!listLength"        
       >
         <option value="" selected>Both</option>
         <option value="completed">Completed</option>
@@ -54,6 +58,7 @@
         [(ngModel)]="succeeded" 
         class="form-control mt-1" 
         (change)="onUpdateFilters()"
+        [disabled]="!listLength"
       >
         <option value="" selected>Both</option>
         <option value="succeeded">Succeeded</option>

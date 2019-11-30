@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Result } from '../models/result.model';
-import { WorkoutState } from 'src/app/workout/workout-train/workout-state.model';
+import { WorkoutState } from '../../workout/workout-train/workout-state.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +67,7 @@ export class ResultsService {
 
   removeResult(id: string) {
     this.results = this.results.filter((result) => id !== result.workoutId);
+    
     localStorage.setItem('results', JSON.stringify(this.results));
   }
 

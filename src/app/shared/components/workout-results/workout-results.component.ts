@@ -14,8 +14,7 @@ export class WorkoutResultsComponent implements OnInit {
   unitNumber: number;
   unitType: string;
 
-  constructor(private exerciseService: ExerciseService) {
-  }
+  constructor(private exerciseService: ExerciseService) { }
 
   ngOnInit() {
     const id = this.exerciseRoundsGroup[0].exerciseId;

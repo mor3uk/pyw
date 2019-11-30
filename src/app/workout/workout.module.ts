@@ -4,6 +4,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
+import { PluralPipe } from '../shared/pipes/pluralize.pipe';
+import { TimerPipe } from '../shared/pipes/timer.pipe';
 import { ExerciseFormComponent } from './workout-create/exercise-form/exercise-form.component';
 import { ExerciseItemComponent } from './workout-create/exercise-item/exercise-item.component';
 import { WorkoutFormComponent } from './workout-create/workout-form/workout-form.component';
@@ -12,8 +14,6 @@ import { WorkoutActionComponent } from './workout-train/workout-action/workout-a
 import { WorkoutPanelComponent } from './workout-train/workout-panel/workout-panel.component';
 import { WorkoutComponent } from './workout.component';
 import { WorkoutResultsComponent } from '../shared/components/workout-results/workout-results.component';
-import { PluralPipe } from '../shared/pipes/pluralize.pipe';
-import { TimerPipe } from '../shared/pipes/timer.pipe';
 
 @NgModule({
   declarations: [

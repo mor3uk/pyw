@@ -29,11 +29,11 @@ export class ExerciseService {
     this.exercisesChanged.next();
   }
 
-  getExercises(): Array<Exercise> {
+  getExercises(): Exercise[] {
     return this.exercises.map((exercise) => ({ ...exercise }));
   }
 
-  getCurrentExercises(): Array<Exercise> {
+  getCurrentExercises(): Exercise[] {
     return this.currentExercises;
   }
 

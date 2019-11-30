@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { Workout } from '../../shared/models/workout.model';
 import { FilterService } from '../filter.service';
-import { WorkoutService } from 'src/app/shared/services/workout.service';
+import { WorkoutService } from '../../shared/services/workout.service';
+import { Workout } from '../../shared/models/workout.model';
 
 @Component({
   selector: 'app-results-list',
   templateUrl: './results-list.component.html',
   styleUrls: ['./results-list.component.scss']
 })
-export class ResultsListComponent implements OnInit {
+export class ResultsListComponent implements OnInit, OnDestroy {
   workouts: Workout[] = [];
+  filtersChangedSubscription: Subscription;
+  workoutWasRemovedSubscription: Subscription;
 
   constructor(
     private filterService: FilterService,
@@ -19,12 +22,18 @@ export class ResultsListComponent implements OnInit {
 
   ngOnInit() {
     this.workouts = this.workoutService.getWorkouts();
-    this.filterService.filtersChanged
-      .subscribe((filters) => {
-        this.workouts = this.filterService.getFilteredWorkouts(filters);
-      });
-    this.workoutService.workoutWasRemoved
-      .subscribe(() => this.workouts = this.workoutService.getWorkouts());
+    this.filtersChangedSubscription = this.filterService
+      .filtersChanged.subscribe((filters) =>
+        this.workouts = this.filterService.getFilteredWorkouts(filters));
+
+    this.workoutWasRemovedSubscription = this.workoutService
+      .workoutWasRemoved.subscribe(() =>
+        this.workouts = this.workoutService.getWorkouts());
+  }
+
+  ngOnDestroy() {
+    this.filtersChangedSubscription.unsubscribe();
+    this.workoutWasRemovedSubscription.unsubscribe();
   }
 
 }

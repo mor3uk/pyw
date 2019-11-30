@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Subject } from 'rxjs';
+
 import moment from 'moment';
 import uuid from 'uuid';
 
-import { Workout } from '../models/workout.model';
-import { ExerciseService } from './exercise.service';
-import { Exercise } from '../models/exercise.model';
 import { ResultsService } from './results.service';
+import { ExerciseService } from './exercise.service';
+import { Workout } from '../models/workout.model';
+import { Exercise } from '../models/exercise.model';
 
 @Injectable({
   providedIn: 'root'

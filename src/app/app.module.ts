@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { WorkoutModule } from './workout/workout.module';
 import { AppRoutingModule } from './app-routing.module';
+import { DatediffPipe } from './results/datediff.pipe';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ResultsComponent } from './results/results.component';
@@ -11,7 +12,6 @@ import { ResultsFiltersComponent } from './results/results-filters/results-filte
 import { ResultsInfoComponent } from './results/results-info/results-info.component';
 import { ResultsItemComponent } from './results/results-item/results-item.component';
 import { ResultsListComponent } from './results/results-list/results-list.component';
-import { DatediffPipe } from './shared/pipes/datediff.pipe';
 
 @NgModule({
   declarations: [

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { WorkoutService } from 'src/app/shared/services/workout.service';
+import { WorkoutService } from '../../../shared/services/workout.service';
 
 @Component({
   selector: 'app-workout-form',

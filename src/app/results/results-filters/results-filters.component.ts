@@ -1,26 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { FilterService } from '../filter.service';
-import { Filters, sortBy } from 'src/app/shared/models/filters.model';
+import { WorkoutService } from '../../shared/services/workout.service';
+import { Filters, sortBy } from '../../results/filters.model';
 
 @Component({
   selector: 'app-results-filters',
   templateUrl: './results-filters.component.html',
   styleUrls: ['./results-filters.component.scss']
 })
-export class ResultsFiltersComponent implements OnInit {
+export class ResultsFiltersComponent implements OnInit, OnDestroy {
   muscleGroup: string = '';
   status: string = '';
   sortBy: sortBy = 0;
   succeeded: string = '';
   sortReverse: boolean = false;
+  listLength: number;
+  workoutWasRemovedSubscription: Subscription;
 
-  constructor(private filterService: FilterService) { }
+  constructor(
+    private filterService: FilterService,
+    private workoutService: WorkoutService,
+  ) { }
 
   ngOnInit() {
+    this.listLength = this.workoutService.getWorkouts().length;
+    
+    this.workoutWasRemovedSubscription = this.workoutService
+      .workoutWasRemoved.subscribe(() => {
+        this.listLength = this.workoutService.getWorkouts().length;
+      });
   }
 
   onUpdateFilters() {
+    if (!(this.succeeded || this.status)) {
+      this.sortBy = 0;
+    }
+
     const filters: Filters = {
       sortBy: +this.sortBy,
       muscleGroup: this.muscleGroup.trim(),
@@ -38,8 +55,10 @@ export class ResultsFiltersComponent implements OnInit {
     }
 
     this.filterService.filtersChanged.next(filters);
+  }
 
-    console.log(this.sortReverse);
+  ngOnDestroy() {
+    this.workoutWasRemovedSubscription.unsubscribe();
   }
 
 }

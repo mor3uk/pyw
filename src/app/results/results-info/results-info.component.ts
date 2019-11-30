@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Workout } from '../../shared/models/workout.model';
 import { WorkoutService } from '../../shared/services/workout.service';
-import { ResultsService } from 'src/app/shared/services/results.service';
-import { Result } from 'src/app/shared/models/result.model';
+import { ResultsService } from '../../shared/services/results.service';
+import { Workout } from '../../shared/models/workout.model';
 
 @Component({
   selector: 'app-results-info',
@@ -20,7 +19,7 @@ export class ResultsInfoComponent implements OnInit {
     private workoutService: WorkoutService,
     private route: ActivatedRoute,
     private router: Router,
-    private resultsService: ResultsService
+    private resultsService: ResultsService,
   ) { }
 
   ngOnInit() {

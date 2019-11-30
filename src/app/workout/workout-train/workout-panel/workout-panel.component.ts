@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { Workout } from '../../../shared/models/workout.model';
 import { WorkoutService } from '../../../shared/services/workout.service';
-import { WorkoutState } from '../workout-state.model';
 import { WorkoutStateService } from '../workout-state.service';
+import { Workout } from '../../../shared/models/workout.model';
+import { WorkoutState } from '../workout-state.model';
 
 @Component({
   selector: 'app-workout-panel',

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { Filters, sortBy } from '../shared/models/filters.model';
 import { WorkoutService } from '../shared/services/workout.service';
+import { Filters, sortBy } from './filters.model';
 import { Workout } from '../shared/models/workout.model';
 
 @Injectable()
@@ -13,6 +13,7 @@ export class FilterService {
 
   getFilteredWorkouts(filters: Filters): Workout[] {
     const workouts = this.workoutService.getWorkouts();
+    
     const filteredWorkouts = workouts.filter((workout) => {
       let muscleGroupMatch = true;
       let statusMatch = true;
