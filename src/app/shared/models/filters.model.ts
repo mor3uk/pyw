@@ -8,5 +8,6 @@ export interface Filters {
   muscleGroup?: string,
   status?: boolean,
   succeeded?: boolean,
-  sortBy?: sortBy
+  sortBy?: sortBy,
+  sortReverse: boolean,
 }

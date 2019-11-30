@@ -33,14 +33,19 @@ export class FilterService {
       return muscleGroupMatch && statusMatch && succeededMatch;
     });
 
-    const filteredAndSotredWorkouts = filteredWorkouts.sort((b, a) => {
+    const filteredAndSotredWorkouts = filteredWorkouts.sort((a, b) => {
+      if (filters.sortReverse) {
+        const temp = a;
+        a = b;
+        b = temp;
+      }
       switch (filters.sortBy) {
         case sortBy.DATE_CREATION:
           return a.createdAt - b.createdAt;
         case sortBy.DATE_COMPLETION:
           return a.completedAt - b.completedAt;
         case sortBy.DURATION:
-          return a.duration - b.duration;
+          return b.duration - a.duration;
       }
       return 1;
     });

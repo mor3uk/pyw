@@ -7,3 +7,19 @@
   margin-left: 15px;
   background-color: #fff;
 }
+
+#sortReverse {
+  display: none;
+}
+
+label[for="sortReverse"] {
+  transition-duration: 0.3s;
+  margin-left: -16px;
+  margin-bottom: -40px;
+  cursor: pointer;
+  border: 8px transparent solid;
+  border-top-color: #6c757d;
+  &.active {
+    transform: scale(-1) translateY(8px);
+  }
+}

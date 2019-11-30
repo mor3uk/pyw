@@ -13,6 +13,7 @@ export class ResultsFiltersComponent implements OnInit {
   status: string = '';
   sortBy: sortBy = 0;
   succeeded: string = '';
+  sortReverse: boolean = false;
 
   constructor(private filterService: FilterService) { }
 
@@ -25,6 +26,7 @@ export class ResultsFiltersComponent implements OnInit {
       muscleGroup: this.muscleGroup.trim(),
       succeeded: null,
       status: null,
+      sortReverse: this.sortReverse,
     };
 
     if (this.succeeded) {
@@ -36,6 +38,8 @@ export class ResultsFiltersComponent implements OnInit {
     }
 
     this.filterService.filtersChanged.next(filters);
+
+    console.log(this.sortReverse);
   }
 
 }

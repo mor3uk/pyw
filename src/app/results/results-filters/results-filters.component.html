@@ -1,7 +1,7 @@
 <div class="result-filters">
   <h3 class="text-secondary">Workout list filters</h3>
   <div class="row">
-    <div class="col-md pr-1">
+    <div class="col-md-6 pr-1">
       <small class="form-text text-muted">Filter workouts by muscle group</small>
       <input 
       [(ngModel)]="muscleGroup" 
@@ -12,8 +12,8 @@
       trim="blur"
     >
     </div>
-    <div class="col-md pl-1">
-      <small class="form-text text-muted">Sort by</small>
+    <div class="col-md-5 pl-1">
+      <small class="form-text text-muted">Sort workouts by</small>
       <select 
         [(ngModel)]="sortBy" 
         class="form-control mt-1" 
@@ -23,6 +23,16 @@
         <option *ngIf="status === 'completed' || succeeded" value="1">Completion date</option>
         <option *ngIf="status === 'completed' || succeeded" value="2">Workout duration</option>
       </select>
+    </div>
+    <div class="col-md-1">
+      <label title="Reverse order" [ngClass]="{ 'active': sortReverse }" for="sortReverse">
+        <input 
+          id="sortReverse"
+          type="checkbox" 
+          [(ngModel)]="sortReverse"
+          (change)="onUpdateFilters()"
+        >
+      </label>
     </div>
   </div>
   <div class="row">
