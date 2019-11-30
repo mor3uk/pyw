@@ -11,7 +11,9 @@ import { WorkoutInfoComponent } from './workout-create/workout-info/workout-info
 import { WorkoutActionComponent } from './workout-train/workout-action/workout-action.component';
 import { WorkoutPanelComponent } from './workout-train/workout-panel/workout-panel.component';
 import { WorkoutComponent } from './workout.component';
-import { WorkoutResultsModule } from '../shared/modules/workout-results.module';
+import { WorkoutResultsComponent } from '../shared/components/workout-results/workout-results.component';
+import { PluralPipe } from '../shared/pipes/pluralize.pipe';
+import { TimerPipe } from '../shared/pipes/timer.pipe';
 
 @NgModule({
   declarations: [
@@ -22,16 +24,22 @@ import { WorkoutResultsModule } from '../shared/modules/workout-results.module';
     WorkoutInfoComponent,
     WorkoutActionComponent,
     WorkoutPanelComponent,
+    WorkoutResultsComponent,
+    PluralPipe,
+    TimerPipe,
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
+    FormsModule,
     NgxTrimDirectiveModule,
-    WorkoutResultsModule
   ],
-  exports: [],
+  exports: [
+    WorkoutResultsComponent,
+    PluralPipe,
+    TimerPipe,
+  ],
   providers: [],
 })
 export class WorkoutModule { }

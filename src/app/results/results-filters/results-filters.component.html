@@ -1,7 +1,7 @@
 <div class="result-filters">
   <h3 class="text-secondary">Workout list filters</h3>
   <div class="row">
-    <div class="col-md">
+    <div class="col-md pr-1">
       <small class="form-text text-muted">Filter workouts by muscle group</small>
       <input 
       [(ngModel)]="muscleGroup" 
@@ -12,21 +12,21 @@
       trim="blur"
     >
     </div>
-    <div *ngIf="status === 'completed' || succeeded" class="col-md">
+    <div class="col-md pl-1">
       <small class="form-text text-muted">Sort by</small>
       <select 
         [(ngModel)]="sortBy" 
         class="form-control mt-1" 
         (change)="onUpdateFilters()"
       >
-        <option value="date-creation" selected>Date of creation</option>
-        <option value="date-completion">Date of completion</option>
-        <option value="time-completion">Time of workout</option>
+        <option value="0" selected>Creation date</option>
+        <option *ngIf="status === 'completed' || succeeded" value="1">Completion date</option>
+        <option *ngIf="status === 'completed' || succeeded" value="2">Workout duration</option>
       </select>
     </div>
   </div>
   <div class="row">
-    <div class="col-md">
+    <div class="col-md pr-1">
       <small class="form-text text-muted">Filter workouts by status</small>
       <select 
         [(ngModel)]="status" 
@@ -38,7 +38,7 @@
         <option value="not completed">Not completed</option>
       </select>
     </div>
-    <div class="col-md">
+    <div class="col-md pl-1">
       <small class="form-text text-muted">Filter workouts by completion</small>
       <select 
         [(ngModel)]="succeeded" 

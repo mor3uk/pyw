@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WorkoutService } from '../../shared/services/workout.service';
 import { Workout } from '../../shared/models/workout.model';
+import { FilterService } from '../filter.service';
+import { WorkoutService } from 'src/app/shared/services/workout.service';
 
 @Component({
   selector: 'app-results-list',
@@ -9,15 +10,18 @@ import { Workout } from '../../shared/models/workout.model';
   styleUrls: ['./results-list.component.scss']
 })
 export class ResultsListComponent implements OnInit {
-  workouts: Array<Workout> = [];
+  workouts: Workout[] = [];
 
-  constructor(private workoutService: WorkoutService) { }
+  constructor(
+    private filterService: FilterService,
+    private workoutService: WorkoutService,
+  ) { }
 
   ngOnInit() {
     this.workouts = this.workoutService.getWorkouts();
-    this.workoutService.workoutFiltersChanged
+    this.filterService.filtersChanged
       .subscribe((filters) => {
-        this.workouts = this.workoutService.getFilteredWorkouts(filters);
+        this.workouts = this.filterService.getFilteredWorkouts(filters);
       });
     this.workoutService.workoutWasRemoved
       .subscribe(() => this.workouts = this.workoutService.getWorkouts());

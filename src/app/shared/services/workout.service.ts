@@ -6,7 +6,6 @@ import uuid from 'uuid';
 import { Workout } from '../models/workout.model';
 import { ExerciseService } from './exercise.service';
 import { Exercise } from '../models/exercise.model';
-import { Filters } from '../models/filters.model';
 import { ResultsService } from './results.service';
 
 @Injectable({
@@ -14,7 +13,6 @@ import { ResultsService } from './results.service';
 })
 export class WorkoutService {
   workouts: Workout[] = [];
-  workoutFiltersChanged = new Subject<Filters>();
   workoutWasRemoved = new Subject();
 
   constructor(
@@ -61,38 +59,6 @@ export class WorkoutService {
 
   getWorkout(id: string): Workout {
     return this.workouts.find((workout) => id === workout.id);
-  }
-
-  getFilteredWorkouts(filters: Filters = {}) {
-    return this.workouts.filter((workout) => {
-      let muscleGroupMatch = true;
-      let statusMatch = true;
-      let succeededMatch = true;
-
-      if (filters.muscleGroup) {
-        muscleGroupMatch = workout.muscleGroup.toLowerCase()
-          .includes(filters.muscleGroup.toLowerCase());
-      }
-      if (filters.status !== null) {
-        statusMatch = workout.status.completed === filters.status;
-      }
-      if (filters.succeeded !== null) {
-        succeededMatch = workout.status.succeeded === filters.succeeded
-          && workout.status.completed;
-      }
-
-      return muscleGroupMatch && statusMatch && succeededMatch;
-    }).sort((b, a) => {
-      switch (filters.sortBy) {
-        case 'date-creation':
-          return a.createdAt - b.createdAt;
-        case 'date-completion':
-          return a.completedAt - b.completedAt;
-        case 'time-completion':
-          return b.duration - a.duration;
-      }
-      return 1;
-    })
   }
 
   getLastWorkout(): Workout {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WorkoutService } from '../../shared/services/workout.service';
+import { FilterService } from '../filter.service';
+import { Filters, sortBy } from 'src/app/shared/models/filters.model';
 
 @Component({
   selector: 'app-results-filters',
@@ -10,17 +11,17 @@ import { WorkoutService } from '../../shared/services/workout.service';
 export class ResultsFiltersComponent implements OnInit {
   muscleGroup: string = '';
   status: string = '';
-  sortBy: 'date-creation' | 'date-completion' | 'time-completion' = 'date-creation';
+  sortBy: sortBy = 0;
   succeeded: string = '';
 
-  constructor(private workoutService: WorkoutService) { }
+  constructor(private filterService: FilterService) { }
 
   ngOnInit() {
   }
 
   onUpdateFilters() {
-    const filters = {
-      sortBy: this.sortBy,
+    const filters: Filters = {
+      sortBy: +this.sortBy,
       muscleGroup: this.muscleGroup.trim(),
       succeeded: null,
       status: null,
@@ -34,7 +35,7 @@ export class ResultsFiltersComponent implements OnInit {
       filters.status = this.status === 'completed';
     }
 
-    this.workoutService.workoutFiltersChanged.next(filters);
+    this.filterService.filtersChanged.next(filters);
   }
 
 }

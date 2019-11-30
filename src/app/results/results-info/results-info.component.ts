@@ -27,7 +27,7 @@ export class ResultsInfoComponent implements OnInit {
     this.route.params.subscribe(({ id } = {}) => {
       this.workout = this.workoutService.getWorkout(id);
       this.id = id;
-      if (!id) {
+      if (!(id && this.workout.status.completed)) {
         return this.exerciseRoundsGroups = [];
       }
       const result = this.resultsService.getResult(id);
