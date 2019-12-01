@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
+import { AuthService } from '../../auth/auth.service';
 import { DataStorageService } from './data-storage.service';
 import { Exercise } from '../models/exercise.model';
 
@@ -13,11 +15,19 @@ export class ExerciseService {
   exercises: Exercise[] = [];
   currentExercises: Exercise[] = [];
 
-  constructor(private dataStorageService: DataStorageService) {
-    dataStorageService.loadExercises()
-      .subscribe((exercises) => {
-        this.exercises = exercises || [];
-      });
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService,
+  ) {
+    authService.user.subscribe((user) => {
+      if (!user) {
+        return;
+      }
+      dataStorageService.loadExercises().pipe(take(1))
+        .subscribe((exercises) => {
+          this.exercises = exercises || [];
+        });
+    });
   }
 
   addExercise(exercise: Exercise): void {

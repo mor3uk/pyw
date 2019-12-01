@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import moment from 'moment';
 import uuid from 'uuid';
 
+import { AuthService } from '../../auth/auth.service';
 import { DataStorageService } from './data-storage.service';
 import { ResultsService } from './results.service';
 import { ExerciseService } from './exercise.service';
@@ -22,12 +23,18 @@ export class WorkoutService {
     private exerciseService: ExerciseService,
     private resultsService: ResultsService,
     private dataStorageService: DataStorageService,
+    private authService: AuthService,
   ) {
-    dataStorageService.loadWorkouts()
-      .subscribe((workouts) => {
-        this.workouts = workouts || [];
-        this.workoutsChanged.next();
-      })
+    authService.user.subscribe((user) => {
+      if (!user) {
+        return;
+      }
+      dataStorageService.loadWorkouts().pipe(take(1))
+        .subscribe((workouts) => {
+          this.workouts = workouts || [];
+          this.workoutsChanged.next();
+        });
+    });
   }
 
   addWorkout(muscleGroup: string, roundsNumber: number) {

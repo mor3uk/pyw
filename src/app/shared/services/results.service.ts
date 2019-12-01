@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
+import { AuthService } from '../../auth/auth.service';
 import { DataStorageService } from './data-storage.service';
 import { Result } from '../models/result.model';
 import { WorkoutState } from '../../workout/workout-train/workout-state.model';
@@ -16,11 +18,19 @@ export class ResultsService {
   groupI: number;
   roundCheck: number;
 
-  constructor(private dataStorageService: DataStorageService) {
-    dataStorageService.loadResults()
-      .subscribe((results) => {
-        this.results = results || [];
-      });
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService
+  ) {
+    authService.user.subscribe((user) => {
+      if (!user) {
+        return;
+      }
+      dataStorageService.loadResults().pipe(take(1))
+        .subscribe((results) => {
+          this.results = results || [];
+        });
+    })
   }
 
   initializeResult(id: string) {

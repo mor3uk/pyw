@@ -1,0 +1,59 @@
+<div class="row mt-4 pl-3">
+  <div class="col-md-7 bg-light border p-4">
+    <h3 class="text-secondary mb-3">Sign {{ signInMode ? 'in to' : 'up for' }} PYW</h3>
+    <div class="alert alert-danger" *ngIf="error">
+      {{ error }}
+    </div>
+    <form [formGroup]="signForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="text-secondary" for="email">Email address</label>
+        <input 
+          trim
+          type="email" 
+          class="form-control" 
+          id="email" 
+          placeholder="Enter email"
+          formControlName="email"
+        >
+        <small 
+          *ngIf="signForm.controls.email.errors && signForm.controls.email.touched"  
+          class="error-message">
+          {{ signForm.controls.email.errors.required && 'This field is required' }}
+          {{ signForm.controls.email.errors.email && 'This email is invalid' }}
+        </small>
+      </div>
+      <div class="form-group">
+        <label class="text-secondary" for="password">Enter password</label>
+        <input 
+          type="password" 
+          class="form-control" 
+          id="password" 
+          placeholder="Password"
+          formControlName="password"
+        >
+        <small 
+          *ngIf="signForm.controls.password.errors && signForm.controls.password.touched"  
+          class="error-message">
+          {{ signForm.controls.password.errors.required && 'Password is required' }}
+          {{ signForm.controls.password.errors.minlength && 'Minimun 6 characters' }}
+          {{ signForm.controls.password.errors.maxlength && 'Maximum 30 characters' }}
+        </small>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [ngClass]="{ 'btn-success': signInMode }"
+          [disabled]="signForm.invalid"
+        >Sign {{ signInMode ? 'in' : 'up' }}
+        </button>
+        <button type="button" class="btn text-secondary" (click)="onSwitchMode()">
+          Switch to <u>Sign {{ signInMode ? 'up' : 'in' }}</u>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-5 d-flex justify-content-center align-items-center">
+    <img class="logo" src="https://psv4.userapi.com/c856236/u89571039/docs/d11/2b840a94630c/unnamed.jpg?extra=tj5F5WaeQV8uVo1k44qEBmOkgX6OZRsVRvqkgQHpV1FI6GGRG5u2q4MLZ_k-QHnKgqPE4bCbGU2bRDipKcSbd4blm6Uc-FKHqW8ttcSy0hnHiTu61EmV0wJZ4NvmUS8hi3V87QsSxSr4jeJ0r3Dkq5-h" alt="Logo">
+  </div>
+</div>

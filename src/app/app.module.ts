@@ -1,10 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 import { WorkoutModule } from './workout/workout.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthInterceptor } from './auth/auth-intercepter.service';
 import { DatediffPipe } from './results/datediff.pipe';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -13,6 +15,7 @@ import { ResultsFiltersComponent } from './results/results-filters/results-filte
 import { ResultsInfoComponent } from './results/results-info/results-info.component';
 import { ResultsItemComponent } from './results/results-item/results-item.component';
 import { ResultsListComponent } from './results/results-list/results-list.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -24,15 +27,18 @@ import { ResultsListComponent } from './results/results-list/results-list.compon
     ResultsItemComponent,
     ResultsListComponent,
     DatediffPipe,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    WorkoutModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    NgxTrimDirectiveModule,
+    AppRoutingModule,
+    WorkoutModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
