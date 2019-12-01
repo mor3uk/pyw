@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { DataStorageService } from './data-storage.service';
 import { Exercise } from '../models/exercise.model';
 
 @Injectable({
@@ -12,17 +13,11 @@ export class ExerciseService {
   exercises: Exercise[] = [];
   currentExercises: Exercise[] = [];
 
-  constructor() {
-    try {
-      const exercisesJSON = localStorage.getItem('exercises');
-      if (exercisesJSON) {
-        this.exercises = JSON.parse(exercisesJSON);
-      } else {
-        this.exercises = [];
-      }
-    } catch (e) {
-      this.exercises = [];
-    }
+  constructor(private dataStorageService: DataStorageService) {
+    dataStorageService.loadExercises()
+      .subscribe((exercises) => {
+        this.exercises = exercises || [];
+      });
   }
 
   addExercise(exercise: Exercise): void {
@@ -64,7 +59,7 @@ export class ExerciseService {
       return exerciseToRewrite || exercise;
     });
 
-    localStorage.setItem('exercises', JSON.stringify(this.exercises));
+    this.dataStorageService.saveExercises(this.exercises);
   }
 
   emptyCurrentExercises() {
@@ -78,7 +73,7 @@ export class ExerciseService {
     ];
     this.emptyCurrentExercises();
 
-    localStorage.setItem('exercises', JSON.stringify(this.exercises));
+    this.dataStorageService.saveExercises(this.exercises);
   }
 
   removeExercisesByIdList(ids: string[]) {
@@ -86,7 +81,7 @@ export class ExerciseService {
       return !ids.includes(exercise.id);
     });
 
-    localStorage.setItem('exercises', JSON.stringify(this.exercises));
+    this.dataStorageService.saveExercises(this.exercises);
   }
 
   removeCurrentExercise(id: string) {

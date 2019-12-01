@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { WorkoutModule } from './workout/workout.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +30,7 @@ import { ResultsListComponent } from './results/results-list/results-list.compon
     AppRoutingModule,
     WorkoutModule,
     FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

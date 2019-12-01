@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+import { DataStorageService } from './data-storage.service';
 import { Result } from '../models/result.model';
 import { WorkoutState } from '../../workout/workout-train/workout-state.model';
 
@@ -15,17 +16,11 @@ export class ResultsService {
   groupI: number;
   roundCheck: number;
 
-  constructor() {
-    try {
-      const resultsJSON = localStorage.getItem('results');
-      if (resultsJSON) {
-        this.results = JSON.parse(resultsJSON);
-      } else {
-        this.results = [];
-      }
-    } catch (e) {
-      this.results = [];
-    }
+  constructor(private dataStorageService: DataStorageService) {
+    dataStorageService.loadResults()
+      .subscribe((results) => {
+        this.results = results || [];
+      });
   }
 
   initializeResult(id: string) {
@@ -62,13 +57,13 @@ export class ResultsService {
       this.results[i] = this.currentResult;
     }
 
-    localStorage.setItem('results', JSON.stringify(this.results));
+    this.dataStorageService.saveResults(this.results);
   }
 
   removeResult(id: string) {
     this.results = this.results.filter((result) => id !== result.workoutId);
-    
-    localStorage.setItem('results', JSON.stringify(this.results));
+
+    this.dataStorageService.saveResults(this.results);
   }
 
   getResult(id: string) {

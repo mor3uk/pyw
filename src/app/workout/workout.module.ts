@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { NgxTrimDirectiveModule } from 'ngx-trim-directive';
 
 import { PluralPipe } from '../shared/pipes/pluralize.pipe';
@@ -34,6 +35,7 @@ import { WorkoutResultsComponent } from '../shared/components/workout-results/wo
     ReactiveFormsModule,
     FormsModule,
     NgxTrimDirectiveModule,
+    HttpClientModule,
   ],
   exports: [
     WorkoutResultsComponent,

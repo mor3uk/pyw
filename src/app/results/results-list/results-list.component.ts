@@ -13,7 +13,7 @@ import { Workout } from '../../shared/models/workout.model';
 export class ResultsListComponent implements OnInit, OnDestroy {
   workouts: Workout[] = [];
   filtersChangedSubscription: Subscription;
-  workoutWasRemovedSubscription: Subscription;
+  workoutsChangedSubscription: Subscription;
 
   constructor(
     private filterService: FilterService,
@@ -26,14 +26,14 @@ export class ResultsListComponent implements OnInit, OnDestroy {
       .filtersChanged.subscribe((filters) =>
         this.workouts = this.filterService.getFilteredWorkouts(filters));
 
-    this.workoutWasRemovedSubscription = this.workoutService
-      .workoutWasRemoved.subscribe(() =>
+    this.workoutsChangedSubscription = this.workoutService
+      .workoutsChanged.subscribe(() =>
         this.workouts = this.workoutService.getWorkouts());
   }
 
   ngOnDestroy() {
     this.filtersChangedSubscription.unsubscribe();
-    this.workoutWasRemovedSubscription.unsubscribe();
+    this.workoutsChangedSubscription.unsubscribe();
   }
 
 }

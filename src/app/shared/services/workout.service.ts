@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 import moment from 'moment';
 import uuid from 'uuid';
 
+import { DataStorageService } from './data-storage.service';
 import { ResultsService } from './results.service';
 import { ExerciseService } from './exercise.service';
 import { Workout } from '../models/workout.model';
@@ -14,22 +16,18 @@ import { Exercise } from '../models/exercise.model';
 })
 export class WorkoutService {
   workouts: Workout[] = [];
-  workoutWasRemoved = new Subject();
+  workoutsChanged = new Subject();
 
   constructor(
     private exerciseService: ExerciseService,
     private resultsService: ResultsService,
+    private dataStorageService: DataStorageService,
   ) {
-    try {
-      const workoutsJSON = localStorage.getItem('workouts');
-      if (workoutsJSON) {
-        this.workouts = JSON.parse(workoutsJSON);
-      } else {
-        this.workouts = [];
-      }
-    } catch (e) {
-      this.workouts = [];
-    }
+    dataStorageService.loadWorkouts()
+      .subscribe((workouts) => {
+        this.workouts = workouts || [];
+        this.workoutsChanged.next();
+      })
   }
 
   addWorkout(muscleGroup: string, roundsNumber: number) {
@@ -51,7 +49,7 @@ export class WorkoutService {
     this.exerciseService.saveExercises();
     this.exerciseService.emptyCurrentExercises();
 
-    localStorage.setItem('workouts', JSON.stringify(this.workouts));
+    this.dataStorageService.saveWorkouts(this.workouts);
   }
 
   getWorkouts(): Workout[] {
@@ -72,9 +70,9 @@ export class WorkoutService {
     );
     this.workouts = this.workouts.filter((workout) => workout.id !== id);
     this.resultsService.removeResult(id);
-    this.workoutWasRemoved.next();
+    this.workoutsChanged.next();
 
-    localStorage.setItem('workouts', JSON.stringify(this.workouts));
+    this.dataStorageService.saveWorkouts(this.workouts);
   }
 
   getOwnExercises(id: string): Exercise[] {
@@ -92,6 +90,6 @@ export class WorkoutService {
       }
     })
 
-    localStorage.setItem('workouts', JSON.stringify(this.workouts));
+    this.dataStorageService.saveWorkouts(this.workouts);
   }
 }

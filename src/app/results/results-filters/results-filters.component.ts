@@ -28,7 +28,7 @@ export class ResultsFiltersComponent implements OnInit, OnDestroy {
     this.listLength = this.workoutService.getWorkouts().length;
     
     this.workoutWasRemovedSubscription = this.workoutService
-      .workoutWasRemoved.subscribe(() => {
+      .workoutsChanged.subscribe(() => {
         this.listLength = this.workoutService.getWorkouts().length;
       });
   }
